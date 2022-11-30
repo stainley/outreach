@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.ui.home;
+package ca.appolizer.outreach.ui.job;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
