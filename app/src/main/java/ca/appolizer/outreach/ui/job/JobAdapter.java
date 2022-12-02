@@ -1,6 +1,7 @@
 package ca.appolizer.outreach.ui.job;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,21 @@ import java.util.List;
 
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.model.Job;
+import ca.appolizer.outreach.ui.job.description.JobDescriptionActivity;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
-    private final List<Job> jobs;
+    public List<Job> jobs;
     private final Context context;
 
-    public JobAdapter(List<Job> jobs, Context context) {
-        this.jobs = jobs;
+    public JobAdapter(Context context) {
         this.context = context;
+    }
+
+    public void add(List<Job> jobs) {
+        if (jobs.size() > 0) {
+            jobs.addAll(jobs);
+            notifyDataSetChanged();
+        }
     }
 
     @NonNull
@@ -39,11 +47,14 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     @Override
     public void onBindViewHolder(@NonNull JobHolder holder, int position) {
 
-        holder.titleTextView.setText(jobs.get(position).getTitle());
-        holder.subtitleTextView.setText(jobs.get(position).getSubtitle());
+        holder.titleTextView.setText(jobs.get(position).getName());
+        //holder.subtitleTextView.setText(jobs.get(position).getDescription());
 
         holder.cardJob.setOnClickListener(view -> {
-            Toast.makeText(context, "CLICKED", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(context, JobDescriptionActivity.class);
+            intent.putExtra("name", jobs.get(position).getName());
+            intent.putExtra("description", jobs.get(position).getDescription());
+            context.startActivity(intent);
         });
     }
 

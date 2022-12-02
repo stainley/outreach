@@ -1,51 +1,64 @@
 package ca.appolizer.outreach.ui.job;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ca.appolizer.outreach.databinding.FragmentHomeBinding;
 import ca.appolizer.outreach.model.Job;
 
 public class HomeFragment extends Fragment {
-
     private FragmentHomeBinding binding;
+
+    private RecyclerView jobListRecycler;
+    private JobAdapter adapter;
+    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+
         View root = binding.getRoot();
 
-        // final TextView textView = binding.textHome;
-        final RecyclerView jobList = binding.jobList;
+        String token = getActivity().getIntent().getStringExtra("token");
+        Log.i("HomeFragment:onCreateView->", "Invoked");
+        //final TextView textView = binding.textHome;
+        jobListRecycler = binding.jobList;
+        adapter = new JobAdapter(requireActivity());
+        homeViewModel = new ViewModelProvider(this, new JobViewModel(getContext(), token, adapter)).get(HomeViewModel.class);
 
-        List<Job> jobs = new ArrayList<>();
-        jobs.add(new Job("Java Developer", "Java Developer with experience on Microservices Spring Boot"));
-        jobs.add(new Job("Senior Back-End Developers, Java/Spring Boot", "7 year job"));
-        jobs.add(new Job("Senior Java Developer - Payments", "1 year job"));
-        jobs.add(new Job("Android Developer", "2 years"));
-        jobs.add(new Job("Senior iOS Engineer", "Description Job"));
-        final JobAdapter jobAdapter = new JobAdapter(jobs, getContext());
-        jobList.setAdapter(jobAdapter);
-        jobList.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        homeViewModel.getJobList().observe(getViewLifecycleOwner(), jobListUpdateObserver);
+        jobListRecycler.setAdapter(adapter);
         return root;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i("HomeFragment:onViewCreated->", "Invoked");
+    }
+
+    private Observer<List<Job>> jobListUpdateObserver = new Observer<List<Job>>() {
+        @Override
+        public void onChanged(List<Job> jobs) {
+            if (jobs != null) {
+                adapter.jobs = jobs;
+                adapter.notifyDataSetChanged();
+            }
+        }
+    };
 
     @Override
     public void onDestroyView() {

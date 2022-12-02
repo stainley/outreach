@@ -1,30 +1,30 @@
 package ca.appolizer.outreach.model;
 
 public class Job {
-    private String title;
-    private String subtitle;
+    private String name;
+    private String description;
 
     public Job() {
     }
 
-    public Job(String title, String subtitle) {
-        this.title = title;
-        this.subtitle = subtitle;
+    public Job(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSubtitle() {
-        return subtitle.length() > 24 ? subtitle.substring(0, 25) + "..." : subtitle;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
