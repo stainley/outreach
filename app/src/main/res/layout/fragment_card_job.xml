@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardJob"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="180dp"
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
-        app:cardMaxElevation="12dp"
+        app:cardMaxElevation="8dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
@@ -33,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="Job Title"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge" />
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
             <TextView
                 android:id="@+id/jobDescription"
@@ -41,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Job Title"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
+                android:textAppearance="@style/TextAppearance.Material3.TitleSmall" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -56,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:drawableLeft="@drawable/baseline_location_city_24"
                     android:gravity="start"
                     android:text="Location"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -67,8 +67,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:drawableRight="@drawable/baseline_location_city_24"
                     android:gravity="end"
                     android:text="1 day ago"
+                    app:guidelineUseRtl="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:layout_editor_absoluteX="257dp"

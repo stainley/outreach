@@ -47,8 +47,6 @@ public class JobDescriptionActivity extends AppCompatActivity {
         WebView webViewDescription = findViewById(R.id.textJobDescription);
         webViewDescription.loadData(description, "text/html", "utf-8");
 
-
-
         FloatingActionButton fab = binding.fab;
         fab.setOnClickListener(view -> Snackbar.make(view, "Apply to job", Snackbar.LENGTH_LONG)
                 .setAction("Confirm", listener -> {
