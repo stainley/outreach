@@ -56,5 +56,6 @@ public class JobDescriptionActivity extends AppCompatActivity {
 
     private void sendMessage() {
         Toast.makeText(this, "Send info", Toast.LENGTH_SHORT).show();
+        finishActivity(0);
     }
 }

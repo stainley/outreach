@@ -4,6 +4,7 @@ public class User {
 
     private Long id;
     private String email;
+    private String password;
     private Student student;
 
     public Long getId() {
@@ -28,5 +29,13 @@ public class User {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -1,7 +1,9 @@
 package ca.appolizer.outreach.ui.job;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,26 +11,39 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ca.appolizer.outreach.R;
+import ca.appolizer.outreach.databinding.FragmentJobDescriptionBinding;
 import ca.appolizer.outreach.model.Job;
 import ca.appolizer.outreach.ui.job.description.JobDescriptionActivity;
+import ca.appolizer.outreach.ui.job.description.JobDescriptionFragment;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     public List<Job> jobs;
-    private final Context context;
+    private static List<Job> arrayListJobs = new ArrayList<>();
+    private final Fragment context;
 
-    public JobAdapter(Context context) {
+    public JobAdapter(Fragment context) {
         this.context = context;
+        if (jobs != null) {
+            arrayListJobs = jobs;
+        }
     }
 
-    public void add(List<Job> jobs) {
-        if (jobs.size() > 0) {
-            jobs.addAll(jobs);
+    public void add(List<Job> jobsAdded) {
+        if (jobsAdded != null && jobsAdded.size() > 0) {
+            //jobs.addAll(jobsAdded);
+            this.arrayListJobs = jobsAdded;
             notifyDataSetChanged();
         }
     }
@@ -48,19 +63,42 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     public void onBindViewHolder(@NonNull JobHolder holder, int position) {
 
         holder.titleTextView.setText(jobs.get(position).getName());
-        //holder.subtitleTextView.setText(jobs.get(position).getDescription());
 
         holder.cardJob.setOnClickListener(view -> {
-            Intent intent = new Intent(context, JobDescriptionActivity.class);
+            Intent intent = new Intent(view.getContext(), JobDescriptionActivity.class);
             intent.putExtra("name", jobs.get(position).getName());
             intent.putExtra("description", jobs.get(position).getDescription());
             context.startActivity(intent);
+            /*Bundle bundle = new Bundle();
+            bundle.putString("description", jobs.get(position).getDescription());
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            JobDescriptionFragment jobDescriptionFragment = new JobDescriptionFragment();
+            jobDescriptionFragment.setArguments(bundle);
+            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.nav_host_fragment_content_main, jobDescriptionFragment).commit();*/
+
         });
+    }
+
+    public void filter(String text) {
+        text = text.toLowerCase();
+        jobs.clear();
+
+        if (text.length() == 0) {
+            jobs.addAll(arrayListJobs);
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append(text);
+            jobs = arrayListJobs.stream().filter(job -> job.getName().toLowerCase().contains(sb))
+                    .collect(Collectors.toList());
+
+        }
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return jobs.size();
+        return jobs != null ? jobs.size() : 0;
     }
 
     class JobHolder extends RecyclerView.ViewHolder {
