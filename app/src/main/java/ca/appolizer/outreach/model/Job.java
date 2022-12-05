@@ -1,6 +1,8 @@
 package ca.appolizer.outreach.model;
 
 public class Job {
+    private long id;
+    private int user_id;
     private String name;
     private String description;
 
@@ -26,5 +28,21 @@ public class Job {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }

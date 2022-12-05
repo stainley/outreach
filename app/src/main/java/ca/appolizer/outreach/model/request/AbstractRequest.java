@@ -1,7 +1,6 @@
-package ca.appolizer.outreach.model;
+package ca.appolizer.outreach.model.request;
 
-public class UserRequest {
-
+public class AbstractRequest implements Request {
     private String email;
     private String password;
 

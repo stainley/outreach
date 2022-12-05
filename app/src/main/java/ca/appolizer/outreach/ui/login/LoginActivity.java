@@ -4,13 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -21,10 +20,11 @@ import java.io.IOException;
 import ca.appolizer.outreach.MainActivity;
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.controller.ApiClient;
-import ca.appolizer.outreach.model.UserRequest;
-import ca.appolizer.outreach.model.UserResponse;
+import ca.appolizer.outreach.model.request.UserRequest;
+import ca.appolizer.outreach.model.response.UserResponse;
+import ca.appolizer.outreach.register.ui.RegisterActivity;
 import ca.appolizer.outreach.ui.custom.CustomProgressDialog;
-import ca.appolizer.outreach.ui.job.HomeFragment;
+import ca.appolizer.outreach.ui.job.JobFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,7 +32,6 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private EditText emailAddressTxt;
     private EditText passwordTxt;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +44,15 @@ public class LoginActivity extends AppCompatActivity {
         completeRegister.setOnClickListener(view -> {
             loginUser(createRequest());
         });
+
+        Button createAccountBtn = findViewById(R.id.createAccount);
+        createAccountBtn.setOnClickListener(this::invokeCreateAccountView);
+    }
+
+    private void invokeCreateAccountView(View view) {
+        Intent createAccountIntent = new Intent(this, RegisterActivity.class);
+
+        startActivity(createAccountIntent);
     }
 
     public UserRequest createRequest() {
@@ -60,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
         final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this);
         customProgressDialog.show(this, "Login", "Login", true, true);
 
-
         Call<UserResponse> userResponseCall = ApiClient.getUserService().login(userRequest);
         userResponseCall.enqueue(new Callback<UserResponse>() {
             @Override
@@ -68,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     if (response.body().getStatus().equals("true")) {
-                        Fragment homeFragment = new HomeFragment();
+                        Fragment homeFragment = new JobFragment();
                         FragmentManager fm = getSupportFragmentManager();
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -76,8 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                         intent.putExtra("id", response.body().getUser().getId());
                         intent.putExtra("email", response.body().getUser().getEmail());
                         intent.putExtra("password", userRequest.getPassword());
-                        // Bundle bundle = new Bundle();
-                        //bundle.putString("token", response.body().getToken());
+
                         customProgressDialog.dismiss();
                         startActivity(intent);
 

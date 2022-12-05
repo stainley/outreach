@@ -37,7 +37,6 @@ public class CustomProgressDialog extends ProgressDialog {
         dialog.setTitle(title);
         dialog.setCancelable(cancelable);
         dialog.setOnCancelListener(cancelListener);
-        /* The next line will add the ProgressBar to the dialog. */
         dialog.addContentView(new ProgressBar(context), new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         dialog.show();
 

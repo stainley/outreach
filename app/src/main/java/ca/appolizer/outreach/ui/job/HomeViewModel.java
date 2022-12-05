@@ -29,12 +29,6 @@ public class HomeViewModel extends ViewModel {
     private final Context context;
     private final String token;
 
-    /*public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
-
-    }
-*/
     public HomeViewModel(Context context, String token, JobAdapter jobAdapter) {
         mJobList = new MutableLiveData<>();
         jobList = new ArrayList<>();
@@ -55,12 +49,6 @@ public class HomeViewModel extends ViewModel {
     private void init() {
         fetchAllJobs();
         mJobList.setValue(jobList);
-    }
-
-    private List<Job> fetchAllJob() {
-        jobList.add(new Job("React", "We require Java Developer"));
-        jobList.add(new Job("Angular", "We require Angular Sr Developer"));
-        return jobList;
     }
 
     private List<Job> fetchAllJobs() {

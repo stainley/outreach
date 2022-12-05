@@ -1,24 +1,15 @@
 package ca.appolizer.outreach;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -28,10 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ca.appolizer.outreach.databinding.ActivityMainBinding;
 import ca.appolizer.outreach.model.User;
-import ca.appolizer.outreach.ui.job.HomeFragment;
+import ca.appolizer.outreach.ui.job.JobFragment;
 
 public class MainActivity extends AppCompatActivity {
-
     private static final String SHARED_PREFERENCES = "profile_info";
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -49,21 +39,22 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.appBarMain.toolbar);
 
         Intent intent = getIntent();
+        long id = intent.getLongExtra("id", 0);
         String token = intent.getStringExtra("token");
         String email = intent.getStringExtra("email");
         String name = intent.getStringExtra("name");
         String password = intent.getStringExtra("password");
 
-        HomeFragment homeFragment = new HomeFragment();
+        JobFragment jobFragment = new JobFragment();
         Bundle bundle = new Bundle();
+        bundle.putLong("user_id", id);
         bundle.putString("token", token);
-        homeFragment.setArguments(bundle);
+        jobFragment.setArguments(bundle);
 
         if (savedInstanceState != null) {
             savedInstanceState.putString("email", email);
             loginEmailView.setText(savedInstanceState.getString("email"));
         }
-
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;

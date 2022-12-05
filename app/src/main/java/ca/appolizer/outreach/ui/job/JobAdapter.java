@@ -32,9 +32,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     public List<Job> jobs;
     private static List<Job> arrayListJobs = new ArrayList<>();
     private final Fragment context;
+    private long studentId;
 
-    public JobAdapter(Fragment context) {
+    public JobAdapter(Fragment context, long studentId) {
         this.context = context;
+        this.studentId = studentId;
         if (jobs != null) {
             arrayListJobs = jobs;
         }
@@ -66,17 +68,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
         holder.cardJob.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), JobDescriptionActivity.class);
+            intent.putExtra("id", jobs.get(position).getId());
             intent.putExtra("name", jobs.get(position).getName());
             intent.putExtra("description", jobs.get(position).getDescription());
+            intent.putExtra("student_id", studentId);
             context.startActivity(intent);
-            /*Bundle bundle = new Bundle();
-            bundle.putString("description", jobs.get(position).getDescription());
-            AppCompatActivity activity = (AppCompatActivity) view.getContext();
-            JobDescriptionFragment jobDescriptionFragment = new JobDescriptionFragment();
-            jobDescriptionFragment.setArguments(bundle);
-            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.nav_host_fragment_content_main, jobDescriptionFragment).commit();*/
-
         });
     }
 

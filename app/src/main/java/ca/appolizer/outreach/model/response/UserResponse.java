@@ -1,4 +1,6 @@
-package ca.appolizer.outreach.model;
+package ca.appolizer.outreach.model.response;
+
+import ca.appolizer.outreach.model.User;
 
 public class UserResponse {
 

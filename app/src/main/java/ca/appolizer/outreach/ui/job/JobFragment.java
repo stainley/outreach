@@ -1,5 +1,6 @@
 package ca.appolizer.outreach.ui.job;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,15 +18,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.databinding.FragmentHomeBinding;
+import ca.appolizer.outreach.databinding.FragmentJobBinding;
 import ca.appolizer.outreach.model.Job;
 
-public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener {
-    private FragmentHomeBinding binding;
+public class JobFragment extends Fragment implements SearchView.OnQueryTextListener {
+    private FragmentJobBinding binding;
 
     private SearchView jobSearchView;
 
@@ -35,15 +35,17 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentJobBinding.inflate(inflater, container, false);
 
         View root = binding.getRoot();
 
-        String token = getActivity().getIntent().getStringExtra("token");
-        Log.i("HomeFragment:onCreateView->", "Invoked");
+        Intent intent = getActivity().getIntent();
+        String token = intent.getStringExtra("token");
+        long student_id = intent.getLongExtra("id", 0);
+        Log.i("JobFragment:onCreateView->", "Invoked");
         //final TextView textView = binding.textHome;
         jobListRecycler = binding.jobList;
-        adapter = new JobAdapter(this);
+        adapter = new JobAdapter(this, student_id);
         homeViewModel = new ViewModelProvider(this, new JobViewModel(getContext(), token, adapter)).get(HomeViewModel.class);
 
         homeViewModel.getJobList().observe(getViewLifecycleOwner(), jobListUpdateObserver);
@@ -51,14 +53,6 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
         setHasOptionsMenu(true);
         return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.i("HomeFragment:onViewCreated->", "Invoked");
-
-
     }
 
     @Override
@@ -98,7 +92,6 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-
         return false;
     }
 
