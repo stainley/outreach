@@ -1,16 +1,16 @@
-package ca.appolizer.outreach.register.repository;
+package ca.appolizer.outreach.repository;
 
 import ca.appolizer.outreach.controller.ApiClient;
+import ca.appolizer.outreach.model.request.AbstractUserRequest;
 import ca.appolizer.outreach.model.response.UserResponse;
-import ca.appolizer.outreach.model.request.AbstractRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterRepositoryImpl implements RegisterRepository<AbstractRequest> {
+public class RegisterRepositoryImpl implements RegisterRepository<AbstractUserRequest> {
 
     @Override
-    public UserResponse registerStudent(AbstractRequest request) {
+    public UserResponse registerStudent(AbstractUserRequest request) {
         final UserResponse[] userResponse = new UserResponse[1];
 
         Call<UserResponse> register = ApiClient.getUserService().register(request);
@@ -31,7 +31,7 @@ public class RegisterRepositoryImpl implements RegisterRepository<AbstractReques
     }
 
     @Override
-    public UserResponse registerCompany(AbstractRequest request) {
+    public UserResponse registerCompany(AbstractUserRequest request) {
         return null;
     }
 }

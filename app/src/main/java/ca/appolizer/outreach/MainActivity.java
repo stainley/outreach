@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putLong("user_id", id);
         bundle.putString("token", token);
+        bundle.putString("email", email);
         jobFragment.setArguments(bundle);
 
         if (savedInstanceState != null) {

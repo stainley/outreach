@@ -20,9 +20,9 @@ import java.io.IOException;
 import ca.appolizer.outreach.MainActivity;
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.controller.ApiClient;
-import ca.appolizer.outreach.model.request.UserRequest;
+import ca.appolizer.outreach.model.request.StudentUserRequest;
 import ca.appolizer.outreach.model.response.UserResponse;
-import ca.appolizer.outreach.register.ui.RegisterActivity;
+import ca.appolizer.outreach.ui.register.RegisterActivity;
 import ca.appolizer.outreach.ui.custom.CustomProgressDialog;
 import ca.appolizer.outreach.ui.job.JobFragment;
 import retrofit2.Call;
@@ -55,20 +55,20 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(createAccountIntent);
     }
 
-    public UserRequest createRequest() {
-        UserRequest userRequest = new UserRequest();
-        userRequest.setEmail(emailAddressTxt.getText().toString());
-        userRequest.setPassword(passwordTxt.getText().toString());
+    public StudentUserRequest createRequest() {
+        StudentUserRequest studentRequest = new StudentUserRequest();
+        studentRequest.setEmail(emailAddressTxt.getText().toString());
+        studentRequest.setPassword(passwordTxt.getText().toString());
 
-        return userRequest;
+        return studentRequest;
     }
 
-    public void loginUser(UserRequest userRequest) {
+    public void loginUser(StudentUserRequest studentRequest) {
 
         final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this);
         customProgressDialog.show(this, "Login", "Login", true, true);
 
-        Call<UserResponse> userResponseCall = ApiClient.getUserService().login(userRequest);
+        Call<UserResponse> userResponseCall = ApiClient.getUserService().login(studentRequest);
         userResponseCall.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         intent.putExtra("token", response.body().getToken());
                         intent.putExtra("id", response.body().getUser().getId());
                         intent.putExtra("email", response.body().getUser().getEmail());
-                        intent.putExtra("password", userRequest.getPassword());
+                        intent.putExtra("password", studentRequest.getPassword());
 
                         customProgressDialog.dismiss();
                         startActivity(intent);
@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<UserResponse> call, Throwable t) {
                 customProgressDialog.dismiss();
                 customProgressDialog.cancel();
-                Toast.makeText(getApplicationContext(), "Request Fail: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "UserRequest Fail: " + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 Log.i("REST_API", t.getMessage());
                 Log.i("REST_API", t.getLocalizedMessage());
             }

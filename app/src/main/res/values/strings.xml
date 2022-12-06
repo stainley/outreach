@@ -21,6 +21,10 @@
     <string name="email_password">Password</string>
     <string name="title_activity_job_posted">JobPostedActivity</string>
     <string name="title_activity_job_description">JobDescriptionActivity</string>
+    <string-array name="availability">
+        <item>Available</item>
+        <item>Unavailable</item>
+    </string-array>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

@@ -41,11 +41,11 @@ public class JobFragment extends Fragment implements SearchView.OnQueryTextListe
 
         Intent intent = getActivity().getIntent();
         String token = intent.getStringExtra("token");
+        String email = intent.getStringExtra("email");
         long student_id = intent.getLongExtra("id", 0);
-        Log.i("JobFragment:onCreateView->", "Invoked");
-        //final TextView textView = binding.textHome;
+
         jobListRecycler = binding.jobList;
-        adapter = new JobAdapter(this, student_id);
+        adapter = new JobAdapter(this, student_id, email);
         homeViewModel = new ViewModelProvider(this, new JobViewModel(getContext(), token, adapter)).get(HomeViewModel.class);
 
         homeViewModel.getJobList().observe(getViewLifecycleOwner(), jobListUpdateObserver);
