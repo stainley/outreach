@@ -79,8 +79,11 @@ public class LoginActivity extends AppCompatActivity {
                         FragmentManager fm = getSupportFragmentManager();
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("token", response.body().getToken());
                         intent.putExtra("id", response.body().getUser().getId());
+                        intent.putExtra("token", response.body().getToken());
+                        intent.putExtra("first_name", response.body().getUser().getStudent().getFirst_name() != null ? response.body().getUser().getStudent().getFirst_name() : "");
+                        intent.putExtra("last_name", response.body().getUser().getStudent().getLast_name() != null ? response.body().getUser().getStudent().getLast_name() : "");
+
                         intent.putExtra("email", response.body().getUser().getEmail());
                         intent.putExtra("password", studentRequest.getPassword());
 
@@ -114,6 +117,35 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("REST_API", t.getLocalizedMessage());
             }
         });
+    }
+
+    class Meal {
+
+        Meal[] meals = {new Meal("Biryani", 20), new Meal("Butter", 45)};
+
+        private String name;
+        private double price;
+
+        public Meal(String name, double price) {
+            this.name = name;
+            this.price = price;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
     }
 
 

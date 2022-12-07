@@ -9,6 +9,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * API client to manage connection to the API
+ *
+ */
 public class ApiClient {
 
     private final String token;

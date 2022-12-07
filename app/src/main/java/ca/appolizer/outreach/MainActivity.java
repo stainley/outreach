@@ -18,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ca.appolizer.outreach.databinding.ActivityMainBinding;
+import ca.appolizer.outreach.model.Student;
 import ca.appolizer.outreach.model.User;
 import ca.appolizer.outreach.ui.job.JobFragment;
 
@@ -42,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         long id = intent.getLongExtra("id", 0);
         String token = intent.getStringExtra("token");
         String email = intent.getStringExtra("email");
-        String name = intent.getStringExtra("name");
+        String firstName = intent.getStringExtra("first_name");
+        String lastName = intent.getStringExtra("last_name");
         String password = intent.getStringExtra("password");
 
         JobFragment jobFragment = new JobFragment();
@@ -67,10 +69,14 @@ public class MainActivity extends AppCompatActivity {
         User user = new User();
         if (email != null) {
             user.setEmail(email);
+            Student student = new Student();
+            student.setFirst_name(firstName);
+            student.setLast_name(lastName);
+            user.setStudent(student);
             this.saveUserDetailSP(user);
         }
 
-        loginNameView.setText(name);
+        loginNameView.setText(firstName + " " + lastName);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow).setOpenableLayout(drawer).build();
 
@@ -86,17 +92,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences sp = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE);
-        String value = sp.getString("email", "");
-        if (!value.equals("")) {
-            loginEmailView.setText(value);
-            Log.i("MainActivity - Inside: onResume: ", value);
+        String nameValue = sp.getString("name", "");
+        String emailValue = sp.getString("email", "");
+        if (!emailValue.equals("")) {
+            loginEmailView.setText(emailValue);
         }
-        Log.i("MainActivity onResume: ", value);
-        // TODO: from SP get the username and password and invoke the service again to
+        if (!nameValue.equals("")) {
+            loginNameView.setText(nameValue);
+        }
+
     }
 
     private void saveUserDetailSP(User user) {
         SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE).edit();
+        editor.putString("name", user.getStudent().getFirst_name() + " " + user.getStudent().getLast_name());
         editor.putString("email", user.getEmail());
         editor.putString("password", user.getPassword());
         editor.apply();

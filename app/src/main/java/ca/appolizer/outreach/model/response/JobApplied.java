@@ -5,8 +5,7 @@ public class JobApplied {
     private long jobId;
     private String email;
 
-    public JobApplied() {
-    }
+    public JobApplied() {}
 
     public JobApplied(long userId, long jobId, String email) {
         this.userId = userId;

@@ -50,7 +50,6 @@ public class JobFragment extends Fragment implements SearchView.OnQueryTextListe
 
         homeViewModel.getJobList().observe(getViewLifecycleOwner(), jobListUpdateObserver);
         jobListRecycler.setAdapter(adapter);
-
         setHasOptionsMenu(true);
         return root;
     }

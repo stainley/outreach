@@ -30,7 +30,7 @@ public class StudentJobDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String db_creation = "CREATE TABLE " + TBL_NAME +
-                "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_USER_ID + " INTEGER," + COLUMN_JOB_ID + " INTEGER, " + COLUMN_USER_EMAIL +" VARCHAR)";
+                "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_USER_ID + " INTEGER," + COLUMN_JOB_ID + " INTEGER, " + COLUMN_USER_EMAIL + " VARCHAR)";
 
         db.execSQL(db_creation);
     }

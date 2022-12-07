@@ -10,7 +10,7 @@ import retrofit2.Response;
 public class RegisterRepositoryImpl implements RegisterRepository<AbstractUserRequest> {
 
     @Override
-    public UserResponse registerStudent(AbstractUserRequest request) {
+    public UserResponse register(AbstractUserRequest request) {
         final UserResponse[] userResponse = new UserResponse[1];
 
         Call<UserResponse> register = ApiClient.getUserService().register(request);
@@ -28,10 +28,5 @@ public class RegisterRepositoryImpl implements RegisterRepository<AbstractUserRe
             }
         });
         return userResponse[0];
-    }
-
-    @Override
-    public UserResponse registerCompany(AbstractUserRequest request) {
-        return null;
     }
 }

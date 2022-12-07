@@ -19,7 +19,6 @@ import ca.appolizer.outreach.repository.RegisterRepositoryImpl;
 import ca.appolizer.outreach.util.EmailUtil;
 
 public class RegisterActivity extends AppCompatActivity {
-
     private EditText emailTxt;
     private EditText passwordTxt;
     private Button createBtn;
@@ -36,7 +35,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
-
 
         emailTxt = findViewById(R.id.txtEmailAddress);
         passwordTxt = findViewById(R.id.txtPassword);
@@ -68,13 +66,14 @@ public class RegisterActivity extends AppCompatActivity {
                     request = new EmployeeUserRequest();
                     request.setEmail(email);
                     request.setPassword(password);
-                    new RegisterRepositoryImpl().registerCompany(request);
+                    request.setUser_type_id(TypeUser.EMPLOYEE.getCode());
+                    new RegisterRepositoryImpl().register(request);
                 } else {
                     request = new StudentUserRequest();
                     request.setEmail(email);
                     request.setPassword(password);
-                    ((StudentUserRequest) request).setUser_type_id(TypeUser.STUDENT.getCode());
-                    new RegisterRepositoryImpl().registerStudent(request);
+                    request.setUser_type_id(TypeUser.STUDENT.getCode());
+                    new RegisterRepositoryImpl().register(request);
                 }
             } else {
                 Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show();
