@@ -21,6 +21,7 @@ public class StudentJobDB extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "ID";
     private static final String COLUMN_USER_ID = "USER_ID";
     private static final String COLUMN_JOB_ID = "JOB_ID";
+    private static final String COLUMN_USER_EMAIL = "USER_EMAIL";
 
     public StudentJobDB(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -28,17 +29,19 @@ public class StudentJobDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String db_creation = "CREATE TABLE " + TBL_NAME + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_USER_ID + " INTEGER," + COLUMN_JOB_ID + " INTEGER)";
+        String db_creation = "CREATE TABLE " + TBL_NAME +
+                "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_USER_ID + " INTEGER," + COLUMN_JOB_ID + " INTEGER, " + COLUMN_USER_EMAIL + " VARCHAR)";
 
         db.execSQL(db_creation);
     }
 
-    public void applyJob(long userId, long jobId) {
+    public void applyJob(long userId, long jobId, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_ID, userId);
         values.put(COLUMN_JOB_ID, jobId);
+        values.put(COLUMN_USER_EMAIL, email);
 
         db.insert(TBL_NAME, null, values);
         db.close();
@@ -50,7 +53,7 @@ public class StudentJobDB extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sqlFindUser, null);
         cursor.moveToFirst();
 
-        JobApplied jobApplied = new JobApplied(cursor.getLong(1), cursor.getLong(2));
+        JobApplied jobApplied = new JobApplied(cursor.getLong(1), cursor.getLong(2), cursor.getString(3));
         cursor.close();
         return jobApplied;
     }
@@ -64,7 +67,7 @@ public class StudentJobDB extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                JobApplied jobApplied = new JobApplied(cursor.getLong(1), cursor.getLong(2));
+                JobApplied jobApplied = new JobApplied(cursor.getLong(1), cursor.getLong(2), cursor.getString(3));
                 jobApplieds.add(jobApplied);
             } while (cursor.moveToNext());
         }

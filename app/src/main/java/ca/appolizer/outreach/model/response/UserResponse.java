@@ -3,7 +3,6 @@ package ca.appolizer.outreach.model.response;
 import ca.appolizer.outreach.model.User;
 
 public class UserResponse {
-
     private int id;
     private String token;
     private String status;

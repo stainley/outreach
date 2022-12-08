@@ -1,9 +1,16 @@
 package ca.appolizer.outreach.model;
 
 public class Student {
+    private long id;
     private String first_name;
     private String last_name;
 
+    private String contactNumber;
+    private int availability;
+    private String email;
+    private String link;
+    private String about;
+    
     public String getFirst_name() {
         return first_name;
     }

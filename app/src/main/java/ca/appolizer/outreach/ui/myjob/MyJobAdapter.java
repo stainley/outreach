@@ -26,8 +26,8 @@ public class MyJobAdapter extends RecyclerView.Adapter<MyJobAdapter.MyJobViewHol
         this.context = context;
     }
 
-    public void addJobsApplied(List<JobApplied> jobApplieds) {
-        this.myJobsApplied = jobApplieds;
+    public void addJobsApplied(List<JobApplied> jobsApplied) {
+        this.myJobsApplied = jobsApplied;
     }
 
     @NonNull
@@ -45,6 +45,7 @@ public class MyJobAdapter extends RecyclerView.Adapter<MyJobAdapter.MyJobViewHol
     public void onBindViewHolder(@NonNull MyJobViewHolder holder, int position) {
         holder.userId.setText(String.valueOf(myJobsApplied.get(position).getUserId()));
         holder.jobId.setText(String.valueOf(myJobsApplied.get(position).getJobId()));
+        holder.userMailTxt.setText(myJobsApplied.get(position).getEmail());
     }
 
     @Override
@@ -56,12 +57,14 @@ public class MyJobAdapter extends RecyclerView.Adapter<MyJobAdapter.MyJobViewHol
 
         private TextView userId;
         private TextView jobId;
+        private TextView userMailTxt;
 
         public MyJobViewHolder(@NonNull View itemView) {
             super(itemView);
 
             userId = itemView.findViewById(R.id.jobTitle);
             jobId = itemView.findViewById(R.id.jobDescription);
+            userMailTxt = itemView.findViewById(R.id.jobEmailTxt);
         }
     }
 }

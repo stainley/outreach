@@ -1,7 +1,6 @@
 package ca.appolizer.outreach.model;
 
 public class User {
-
     private Long id;
     private String email;
     private String password;

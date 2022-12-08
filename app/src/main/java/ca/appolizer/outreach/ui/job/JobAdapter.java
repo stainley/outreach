@@ -1,21 +1,15 @@
 package ca.appolizer.outreach.ui.job;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -23,20 +17,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.databinding.FragmentJobDescriptionBinding;
 import ca.appolizer.outreach.model.Job;
 import ca.appolizer.outreach.ui.job.description.JobDescriptionActivity;
-import ca.appolizer.outreach.ui.job.description.JobDescriptionFragment;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     public List<Job> jobs;
     private static List<Job> arrayListJobs = new ArrayList<>();
     private final Fragment context;
     private long studentId;
+    private String email;
 
-    public JobAdapter(Fragment context, long studentId) {
+    public JobAdapter(Fragment context, long studentId, String email) {
         this.context = context;
         this.studentId = studentId;
+        this.email = email;
         if (jobs != null) {
             arrayListJobs = jobs;
         }
@@ -70,6 +64,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
             Intent intent = new Intent(view.getContext(), JobDescriptionActivity.class);
             intent.putExtra("id", jobs.get(position).getId());
             intent.putExtra("name", jobs.get(position).getName());
+            intent.putExtra("email", email);
             intent.putExtra("description", jobs.get(position).getDescription());
             intent.putExtra("student_id", studentId);
             context.startActivity(intent);

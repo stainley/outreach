@@ -3,13 +3,14 @@ package ca.appolizer.outreach.model.response;
 public class JobApplied {
     private long userId;
     private long jobId;
+    private String email;
 
-    public JobApplied() {
-    }
+    public JobApplied() {}
 
-    public JobApplied(long userId, long jobId) {
+    public JobApplied(long userId, long jobId, String email) {
         this.userId = userId;
         this.jobId = jobId;
+        this.email = email;
     }
 
     public long getUserId() {
@@ -26,5 +27,13 @@ public class JobApplied {
 
     public void setJobId(long jobId) {
         this.jobId = jobId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
