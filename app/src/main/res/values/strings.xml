@@ -6,7 +6,7 @@
     <string name="nav_header_subtitle">john.smith@email.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
+    <string name="job_label">Job Title</string>
     <string name="menu_job">Jobs</string>
     <string name="menu_my_jobs">My Jobs</string>
     <string name="menu_slideshow">TBD</string>

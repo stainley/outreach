@@ -4,6 +4,7 @@ import ca.appolizer.outreach.model.JobList;
 import ca.appolizer.outreach.model.Student;
 import ca.appolizer.outreach.model.request.AbstractUserRequest;
 import ca.appolizer.outreach.model.request.StudentUserRequest;
+import ca.appolizer.outreach.model.response.UserProfileResponse;
 import ca.appolizer.outreach.model.response.UserResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,5 +29,5 @@ public interface UserService {
      * @return
      */
     @GET(value = "api/student/{id}")
-    Call<Student> getStudentInfo(@Path(value = "id") int id);
+    Call<UserProfileResponse> getStudentInfo(@Path(value = "id") long id);
 }

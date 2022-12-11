@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.databinding.ActivityJobDescriptionBinding;
-import ca.appolizer.outreach.student.repository.StudentJobDB;
+import ca.appolizer.outreach.student.db.StudentJobDB;
 
 public class JobDescriptionActivity extends AppCompatActivity {
 
