@@ -1,7 +1,7 @@
 package ca.appolizer.outreach.model;
 
 public enum TypeUser {
-    STUDENT(3), EMPLOYEE(2);
+    STUDENT(3), EMPLOYEE(2), ADMIN(1);
 
     TypeUser(int code) {
         this.code = code;

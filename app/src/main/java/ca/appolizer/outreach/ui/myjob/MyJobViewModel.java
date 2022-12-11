@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import ca.appolizer.outreach.model.response.JobApplied;
-import ca.appolizer.outreach.student.repository.StudentJobDB;
+import ca.appolizer.outreach.student.db.StudentJobDB;
 
 public class MyJobViewModel extends ViewModel {
 
