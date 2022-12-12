@@ -43,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
         firstNameText = findViewById(R.id.firstNameTxt);
         lastNameText = findViewById(R.id.lastNameTxt);
         emailTxt = findViewById(R.id.emailTxt);
+        emailTxt.setEnabled(false);
         phoneTxt = findViewById(R.id.phoneTxt);
         aboutTxt = findViewById(R.id.aboutTxt);
         availabilitySpinner = findViewById(R.id.availabilitySpinner);
@@ -81,13 +82,10 @@ public class ProfileActivity extends AppCompatActivity {
         userId = sharedPreferences.getLong("user_id", 0);
     }
 
-    void disableTextEdition() {
-        this.firstNameText.setEnabled(false);
-        this.lastNameText.setEnabled(false);
-        this.emailTxt.setEnabled(false);
-        this.phoneTxt.setEnabled(false);
-        this.aboutTxt.setEnabled(false);
+    private void enableEdition(boolean status) {
+        this.firstNameText.setEnabled(status);
+        this.lastNameText.setEnabled(status);
+        this.phoneTxt.setEnabled(status);
+        this.aboutTxt.setEnabled(status);
     }
-
-
 }
