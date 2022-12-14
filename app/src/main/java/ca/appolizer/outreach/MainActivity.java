@@ -23,6 +23,7 @@ import ca.appolizer.outreach.model.Student;
 import ca.appolizer.outreach.model.User;
 import ca.appolizer.outreach.ui.job.JobFragment;
 import ca.appolizer.outreach.ui.profile.ProfileActivity;
+import ca.appolizer.outreach.ui.profile.ProfileMainActivity;
 
 public class MainActivity extends AppCompatActivity {
     public static final String SHARED_PREFERENCES = "profile_info";
@@ -138,6 +139,10 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("token", token);
                 intent.putExtra("student_profile", user);
                 startActivity(intent);
+                break;
+            case R.id.action_section:
+                Intent settingIntent = new Intent(this, ProfileMainActivity.class);
+                startActivity(settingIntent);
                 break;
         }
         return super.onOptionsItemSelected(item);
