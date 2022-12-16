@@ -20,7 +20,6 @@ import java.io.IOException;
 import ca.appolizer.outreach.MainActivity;
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.controller.ApiClient;
-import ca.appolizer.outreach.model.Student;
 import ca.appolizer.outreach.model.User;
 import ca.appolizer.outreach.model.request.StudentUserRequest;
 import ca.appolizer.outreach.model.response.UserResponse;
@@ -87,8 +86,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         intent.putExtra("token", response.body().getToken());
                         intent.putExtra("user", user);
-                        intent.putExtra("first_name", response.body().getUser().getStudent().getFirst_name() != null ? response.body().getUser().getStudent().getFirst_name() : "");
-                        intent.putExtra("last_name", response.body().getUser().getStudent().getLast_name() != null ? response.body().getUser().getStudent().getLast_name() : "");
+                        intent.putExtra("first_name", response.body().getUser().getStudent().getFirstName() != null ? response.body().getUser().getStudent().getFirstName() : "");
+                        intent.putExtra("last_name", response.body().getUser().getStudent().getLastName() != null ? response.body().getUser().getStudent().getLastName() : "");
 
                         intent.putExtra("email", response.body().getUser().getEmail());
                         intent.putExtra("password", studentRequest.getPassword());

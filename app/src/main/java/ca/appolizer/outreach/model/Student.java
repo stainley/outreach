@@ -1,34 +1,45 @@
 package ca.appolizer.outreach.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class Student implements Serializable {
     private long id;
-
-    private String user_id;
-    private String first_name;
-    private String last_name;
-
-    private String contact_number;
+    @SerializedName("user_id")
+    @Expose
+    private String userId;
+    @SerializedName("first_name")
+    private String firstName;
+    @SerializedName("last_name")
+    private String lastName;
+    @SerializedName("contact_number")
+    private String contactNumber;
     private int availability;
     private String email;
     private String link;
     private String about;
 
-    public String getFirst_name() {
-        return first_name;
+    @SerializedName("skillsets")
+    @Expose
+    private List<Skillset> skillsets;
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public long getId() {
@@ -72,19 +83,27 @@ public class Student implements Serializable {
         this.about = about;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getContact_number() {
-        return contact_number;
+    public String getContactNumber() {
+        return contactNumber;
     }
 
-    public void setContact_number(String contact_number) {
-        this.contact_number = contact_number;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public List<Skillset> getSkillsets() {
+        return skillsets;
+    }
+
+    public void setSkillsets(List<Skillset> skillsets) {
+        this.skillsets = skillsets;
     }
 }

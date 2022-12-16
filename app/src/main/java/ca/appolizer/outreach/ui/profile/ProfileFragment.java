@@ -1,23 +1,104 @@
 package ca.appolizer.outreach.ui.profile;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.textfield.TextInputEditText;
+
+import ca.appolizer.outreach.MainActivity;
 import ca.appolizer.outreach.R;
+import ca.appolizer.outreach.model.Student;
 
 public class ProfileFragment extends Fragment {
+
+    private TextInputEditText firstNameTxt, lastNameTxt, emailTxt, phoneTxt, aboutTxt;
+    private ProfileViewModel profileViewModel;
+
+    private SharedPreferences sharedPreferences;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_profile, container, false);
 
+        firstNameTxt = view.findViewById(R.id.firstNameTxt);
+        lastNameTxt = view.findViewById(R.id.lastNameTxt);
+        emailTxt = view.findViewById(R.id.emailTxt);
+        phoneTxt = view.findViewById(R.id.phoneTxt);
+        aboutTxt = view.findViewById(R.id.aboutTxt);
+
+        emailTxt.setEnabled(false);
+        activateEdition();
+
         return view;
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        sharedPreferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREFERENCES, MODE_PRIVATE);
+        long userId = sharedPreferences.getLong("user_id", 0);
+        String token = sharedPreferences.getString("token", "");
+
+        profileViewModel = new ViewModelProvider(this, new ProfileViewModelProvider(token, userId)).get(ProfileViewModel.class);
+
+        profileViewModel.getUserProfile().observe(getActivity(), userProfileResponse -> {
+            if (userProfileResponse != null) {
+                Student student = userProfileResponse.getStudent();
+                firstNameTxt.setText(student.getFirstName());
+                lastNameTxt.setText(student.getLastName());
+                emailTxt.setText(student.getEmail());
+                phoneTxt.setText(student.getContactNumber());
+                aboutTxt.setText(student.getAbout());
+            }
+        });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.profile_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menuEdit:
+                activateEdition();
+                break;
+            case R.id.menuSave:
+                Toast.makeText(getContext(), "Saving info", Toast.LENGTH_SHORT).show();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void activateEdition() {
+        firstNameTxt.setEnabled(!firstNameTxt.isEnabled());
+        lastNameTxt.setEnabled(!lastNameTxt.isEnabled());
+        phoneTxt.setEnabled(!phoneTxt.isEnabled());
+        aboutTxt.setEnabled(!aboutTxt.isEnabled());
+    }
+
 }

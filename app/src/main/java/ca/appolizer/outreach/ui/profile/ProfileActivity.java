@@ -11,6 +11,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import ca.appolizer.outreach.MainActivity;
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.databinding.ActivityProfileBinding;
@@ -64,15 +68,26 @@ public class ProfileActivity extends AppCompatActivity {
         profileViewModel.getUserProfile().observe(this, userProfileResponse -> {
             if (userProfileResponse != null) {
                 Student student = userProfileResponse.getStudent();
-                firstNameText.setText(student.getFirst_name());
-                lastNameText.setText(student.getLast_name());
+                firstNameText.setText(student.getFirstName());
+                lastNameText.setText(student.getLastName());
                 emailTxt.setText(student.getEmail());
-                phoneTxt.setText(student.getContact_number());
+                phoneTxt.setText(student.getContactNumber());
                 aboutTxt.setText(student.getAbout());
 
                 availabilitySpinner.setSelection(student.getAvailability());
             }
         });
+
+        List<String> completeSkill = new ArrayList<>();
+
+        profileViewModel.getUserProfile().observe(this, completeSkills -> {
+            if (completeSkills != null) {
+                String[] mySkills = completeSkills.getCompleteSkills().split(",");
+                completeSkill.addAll(Arrays.asList(mySkills));
+            }
+        });
+
+        System.out.println(completeSkill.size());
     }
 
     @Override

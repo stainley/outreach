@@ -52,7 +52,8 @@
 
         <activity
             android:name=".ui.profile.ProfileMainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
 
         <service
             android:name=".messaging.MyFirebaseMessagingService"

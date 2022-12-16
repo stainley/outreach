@@ -1,22 +1,25 @@
 package ca.appolizer.outreach.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Skill {
 
-    private long id;
+public class Skill implements Serializable {
+
+    private int id;
     private String name;
+    @SerializedName("created_at")
     private LocalDateTime createdAt;
+    @SerializedName("updated_at")
+    private LocalDateTime updatedAt;
 
-    public Skill(String name) {
-        this.name = name;
-    }
-
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -34,5 +37,13 @@ public class Skill {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveUserDetailSP(User user) {
         SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE).edit();
-        editor.putString("name", user.getStudent().getFirst_name() + " " + user.getStudent().getLast_name());
+        editor.putString("name", user.getStudent().getFirstName() + " " + user.getStudent().getLastName());
         editor.putString("email", user.getEmail());
         editor.putString("password", user.getPassword());
         editor.putString("token", token != null ? token : "");

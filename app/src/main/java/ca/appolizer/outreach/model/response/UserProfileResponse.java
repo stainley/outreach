@@ -1,12 +1,19 @@
 package ca.appolizer.outreach.model.response;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 import ca.appolizer.outreach.model.Student;
 
 public class UserProfileResponse implements Serializable {
     private boolean status;
+    @SerializedName("completeSkills")
     private String completeSkills;
+
+    @SerializedName("student")
+    @Expose
     private Student student;
 
     public boolean isStatus() {

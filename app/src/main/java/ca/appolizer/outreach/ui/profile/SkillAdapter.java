@@ -1,9 +1,9 @@
 package ca.appolizer.outreach.ui.profile;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -13,14 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.model.Skill;
+import ca.appolizer.outreach.model.Skillset;
 
 
 public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.SkillViewHolder> {
-    private List<Skill> skills;
 
-    public SkillAdapter(List<Skill> skills) {
-        this.skills = skills;
+    private final List<Skillset> skillsetList;
+    private Context context;
+
+    public SkillAdapter(List<Skillset> skillsetList) {
+        this.skillsetList = skillsetList;
     }
 
 
@@ -29,32 +31,33 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.SkillViewHol
     public SkillViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.row_skillset, parent, false);
-        RecyclerView.ViewHolder viewHolder = new SkillViewHolder(view);
-        return (SkillViewHolder) viewHolder;
+        context = parent.getContext();
+        return new SkillViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SkillViewHolder holder, int position) {
-        holder.skillNameTxt.setText(skills.get(position).getName());
-        holder.skillYearTxt.setText(position + " years");
+        holder.skillNameTxt.setText(skillsetList.get(position).getSkill().getName());
+        String yearsOfExp = skillsetList.get(position).getTotalYearsExperience() + " " + context.getResources().getString(R.string.years);
+        holder.skillYearTxt.setText(yearsOfExp);
 
         holder.removeSkillBtn.setOnClickListener(view -> {
-            Toast.makeText(view.getContext(), "Skill has been removed " + skills.get(position), Toast.LENGTH_SHORT).show();
-            skills.remove(position);
-            notifyDataSetChanged();
+            skillsetList.remove(position);
+
+            notifyItemRemoved(position);
+            notifyItemRangeRemoved(position, skillsetList.size());
         });
     }
 
-
     @Override
     public int getItemCount() {
-        return skills.size();
+        return skillsetList.size();
     }
 
-    class SkillViewHolder extends RecyclerView.ViewHolder {
-        private AppCompatImageButton removeSkillBtn;
-        private AppCompatTextView skillNameTxt;
-        private AppCompatTextView skillYearTxt;
+    static class SkillViewHolder extends RecyclerView.ViewHolder {
+        private final AppCompatImageButton removeSkillBtn;
+        private final AppCompatTextView skillNameTxt;
+        private final AppCompatTextView skillYearTxt;
 
         public SkillViewHolder(@NonNull View itemView) {
             super(itemView);
