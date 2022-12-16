@@ -10,10 +10,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -26,6 +28,7 @@ import ca.appolizer.outreach.model.Student;
 public class ProfileFragment extends Fragment {
 
     private TextInputEditText firstNameTxt, lastNameTxt, emailTxt, phoneTxt, aboutTxt;
+    private AppCompatSpinner availabilitySpinner;
     private ProfileViewModel profileViewModel;
 
     private SharedPreferences sharedPreferences;
@@ -40,6 +43,7 @@ public class ProfileFragment extends Fragment {
         emailTxt = view.findViewById(R.id.emailTxt);
         phoneTxt = view.findViewById(R.id.phoneTxt);
         aboutTxt = view.findViewById(R.id.aboutTxt);
+        availabilitySpinner = view.findViewById(R.id.availabilitySpinner);
 
         emailTxt.setEnabled(false);
         activateEdition();
@@ -62,7 +66,7 @@ public class ProfileFragment extends Fragment {
         String token = sharedPreferences.getString("token", "");
 
         profileViewModel = new ViewModelProvider(this, new ProfileViewModelProvider(token, userId)).get(ProfileViewModel.class);
-
+        ArrayAdapter<String> studentAvailability = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.availability));
         profileViewModel.getUserProfile().observe(getActivity(), userProfileResponse -> {
             if (userProfileResponse != null) {
                 Student student = userProfileResponse.getStudent();
@@ -71,8 +75,13 @@ public class ProfileFragment extends Fragment {
                 emailTxt.setText(student.getEmail());
                 phoneTxt.setText(student.getContactNumber());
                 aboutTxt.setText(student.getAbout());
+
+                availabilitySpinner.setSelection(student.getAvailability());
             }
         });
+
+
+        availabilitySpinner.setAdapter(studentAvailability);
     }
 
     @Override
@@ -99,6 +108,7 @@ public class ProfileFragment extends Fragment {
         lastNameTxt.setEnabled(!lastNameTxt.isEnabled());
         phoneTxt.setEnabled(!phoneTxt.isEnabled());
         aboutTxt.setEnabled(!aboutTxt.isEnabled());
+        availabilitySpinner.setEnabled(!availabilitySpinner.isEnabled());
     }
 
 }

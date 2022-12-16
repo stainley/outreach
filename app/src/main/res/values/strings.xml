@@ -23,8 +23,8 @@
     <string name="title_activity_job_description">JobDescriptionActivity</string>
     <string name="years">years</string>
     <string-array name="availability">
-        <item>Available</item>
         <item>Unavailable</item>
+        <item>Available</item>
     </string-array>
     <string name="large_text">
     </string>
