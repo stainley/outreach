@@ -1,6 +1,4 @@
-package ca.appolizer.outreach.ui.profile;
-
-import android.content.Context;
+package ca.appolizer.outreach.ui.profile.profile;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

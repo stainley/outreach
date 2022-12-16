@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.ui.profile;
+package ca.appolizer.outreach.ui.profile.skillset;
 
 import android.content.Context;
 import android.view.LayoutInflater;

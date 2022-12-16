@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.ui.profile;
+package ca.appolizer.outreach.ui.profile.profile;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -36,7 +36,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         firstNameTxt = view.findViewById(R.id.firstNameTxt);
         lastNameTxt = view.findViewById(R.id.lastNameTxt);

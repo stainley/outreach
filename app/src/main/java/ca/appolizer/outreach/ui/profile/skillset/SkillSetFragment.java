@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.ui.profile;
+package ca.appolizer.outreach.ui.profile.skillset;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,6 +24,9 @@ import java.util.List;
 
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.model.Skillset;
+import ca.appolizer.outreach.ui.profile.profile.ProfileViewModel;
+import ca.appolizer.outreach.ui.profile.profile.ProfileViewModelProvider;
+import ca.appolizer.outreach.ui.profile.skillset.SkillAdapter;
 
 public class SkillSetFragment extends Fragment {
     List<Skillset> skills = new ArrayList<>();

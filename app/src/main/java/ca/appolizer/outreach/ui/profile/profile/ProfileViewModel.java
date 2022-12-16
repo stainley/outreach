@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.ui.profile;
+package ca.appolizer.outreach.ui.profile.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

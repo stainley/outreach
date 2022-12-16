@@ -47,11 +47,6 @@
 
         <activity
             android:name=".ui.profile.ProfileActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity" />
-
-        <activity
-            android:name=".ui.profile.ProfileMainActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
 

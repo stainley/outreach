@@ -1,106 +1,74 @@
 package ca.appolizer.outreach.ui.profile;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.google.android.material.tabs.TabLayout;
 
-import ca.appolizer.outreach.MainActivity;
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.databinding.ActivityProfileBinding;
-import ca.appolizer.outreach.model.Student;
-import ca.appolizer.outreach.model.User;
+import ca.appolizer.outreach.ui.profile.profile.ProfileFragment;
+import ca.appolizer.outreach.ui.profile.skillset.SkillSetFragment;
 
 public class ProfileActivity extends AppCompatActivity {
-
-    private ActivityProfileBinding binding;
-    private EditText firstNameText;
-    private EditText lastNameText;
-    private EditText emailTxt;
-    private EditText phoneTxt;
-    private EditText aboutTxt;
-
-    private Spinner availabilitySpinner;
-    private long userId;
-
-    private ProfileViewModel profileViewModel;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityProfileBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_profile_main);
 
-        firstNameText = findViewById(R.id.firstNameTxt);
-        lastNameText = findViewById(R.id.lastNameTxt);
-        emailTxt = findViewById(R.id.emailTxt);
-        emailTxt.setEnabled(false);
-        phoneTxt = findViewById(R.id.phoneTxt);
-        aboutTxt = findViewById(R.id.aboutTxt);
-        availabilitySpinner = findViewById(R.id.availabilitySpinner);
+        ActionBar actionBar = getSupportActionBar();
 
-        //this.disableTextEdition();
-        String[] availability = {"Unavailable", "Available"};
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Profile");
+        }
 
-        ArrayAdapter<String> studentAvailability = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, availability);
-        availabilitySpinner.setAdapter(studentAvailability);
+        TabLayout tabLayout = findViewById(R.id.tabMenuSkill);
 
-        Intent intent = getIntent();
-        String token = intent.getStringExtra("token");
-        sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFERENCES, MODE_PRIVATE);
-        User user = (User) intent.getSerializableExtra("student_profile");
-        userId = user != null ? user.getStudent().getId() : sharedPreferences.getLong("user_id", 0);
-        profileViewModel = new ViewModelProvider(this, new ProfileViewModelProvider(token, userId)).get(ProfileViewModel.class);
+        FragmentManager fragment = getSupportFragmentManager();
+        fragment.beginTransaction().replace(R.id.fragment_profile_container, new ProfileFragment()).commit();
 
-        profileViewModel.getUserProfile().observe(this, userProfileResponse -> {
-            if (userProfileResponse != null) {
-                Student student = userProfileResponse.getStudent();
-                firstNameText.setText(student.getFirstName());
-                lastNameText.setText(student.getLastName());
-                emailTxt.setText(student.getEmail());
-                phoneTxt.setText(student.getContactNumber());
-                aboutTxt.setText(student.getAbout());
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment fragment = new ProfileFragment();
 
-                availabilitySpinner.setSelection(student.getAvailability());
+                FragmentManager supportFragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+
+                int position = tabLayout.getSelectedTabPosition();
+
+                switch (position) {
+                    case 0:
+                        fragment = new ProfileFragment();
+                        break;
+                    case 1:
+                        fragment = new SkillSetFragment();
+                        break;
+                    default:
+                        Log.i("INVALID", "Invalid");
+                }
+                transaction.replace(R.id.fragment_profile_container, fragment).commit();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 
-        List<String> completeSkill = new ArrayList<>();
-
-        profileViewModel.getUserProfile().observe(this, completeSkills -> {
-            if (completeSkills != null) {
-                String[] mySkills = completeSkills.getCompleteSkills().split(",");
-                completeSkill.addAll(Arrays.asList(mySkills));
-            }
-        });
-
-        System.out.println(completeSkill.size());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFERENCES, MODE_PRIVATE);
-        userId = sharedPreferences.getLong("user_id", 0);
-    }
-
-    private void enableEdition(boolean status) {
-        this.firstNameText.setEnabled(status);
-        this.lastNameText.setEnabled(status);
-        this.phoneTxt.setEnabled(status);
-        this.aboutTxt.setEnabled(status);
     }
 }
