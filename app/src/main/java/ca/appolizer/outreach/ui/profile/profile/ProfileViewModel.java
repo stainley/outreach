@@ -1,5 +1,8 @@
 package ca.appolizer.outreach.ui.profile.profile;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -9,27 +12,26 @@ import java.util.List;
 import ca.appolizer.outreach.controller.ApiClient;
 import ca.appolizer.outreach.model.Skillset;
 import ca.appolizer.outreach.model.Student;
+import ca.appolizer.outreach.model.request.StudentSkillsetRequest;
 import ca.appolizer.outreach.model.response.SkillsetResponse;
+import ca.appolizer.outreach.model.response.StudentSkillsetResponse;
 import ca.appolizer.outreach.model.response.UserProfileResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileViewModel extends ViewModel {
+
+    private static final String TAG = ProfileViewModel.class.getName();
     private MutableLiveData<UserProfileResponse> userProfile;
     private MutableLiveData<List<Skillset>> skillMutableLiveData;
     private MutableLiveData<List<Skillset>> skillsetLiveData;
-
-    private final long id;
-    private final String token;
 
     public ProfileViewModel(String token, long id) {
         userProfile = new MutableLiveData<>();
         skillMutableLiveData = new MutableLiveData<>();
         skillsetLiveData = new MutableLiveData<>();
 
-        this.token = token;
-        this.id = id;
         getStudentProfile(token, id);
         getAllSkillSet(token);
     }
@@ -87,6 +89,25 @@ public class ProfileViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<SkillsetResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    public void addStudentSkillset(String token, StudentSkillsetRequest request) {
+
+        Call<StudentSkillsetResponse> studentSkillset = ApiClient.getUserServiceWithToken(token).addStudentSkillset(request);
+        studentSkillset.enqueue(new Callback<StudentSkillsetResponse>() {
+            @Override
+            public void onResponse(Call<StudentSkillsetResponse> call, Response<StudentSkillsetResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StudentSkillsetResponse> call, Throwable t) {
 
             }
         });

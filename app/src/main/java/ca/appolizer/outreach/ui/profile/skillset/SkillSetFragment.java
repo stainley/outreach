@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.model.Skillset;
+import ca.appolizer.outreach.model.request.StudentSkillsetRequest;
 import ca.appolizer.outreach.ui.profile.profile.ProfileViewModel;
 import ca.appolizer.outreach.ui.profile.profile.ProfileViewModelProvider;
 import ca.appolizer.outreach.ui.profile.skillset.SkillAdapter;
@@ -39,6 +41,7 @@ public class SkillSetFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_skills, container, false);
         recyclerViewSkill = view.findViewById(R.id.skillRecycleView);
+        EditText skillYearTxt = view.findViewById(R.id.skillYearTxt);
         MaterialButton addSkillButton = view.findViewById(R.id.addSkillButton);
         AutoCompleteTextView dropdownSkill = view.findViewById(R.id.skillSetSpinner);
 
@@ -49,12 +52,24 @@ public class SkillSetFragment extends Fragment {
         ArrayAdapter<Skillset> arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item, skills);
         dropdownSkill.setAdapter(arrayAdapter);
 
+        final Skillset[] skillset = new Skillset[1];
 
         dropdownSkill.setOnItemClickListener((parent, view1, position, id) -> {
             Toast.makeText(getContext(), "SELECTED: " + skills.get(position), Toast.LENGTH_SHORT).show();
+            skillset[0] = skills.get(position);
         });
 
-        addSkillButton.setOnClickListener(v -> {
+        addSkillButton.setOnClickListener(viewButton -> {
+            String year = skillYearTxt.getText().toString();
+
+            if (year.equals("") || dropdownSkill.getText().toString().equals("")) {
+                Toast.makeText(requireActivity(), "Could not be empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            StudentSkillsetRequest request = new StudentSkillsetRequest((int) getUserId(), skillset[0].getId(), Integer.parseInt(year));
+            skillSetViewModel.addStudentSkillset(getToken(), request);
+
             arrayAdapter.notifyDataSetChanged();
         });
 
@@ -71,7 +86,6 @@ public class SkillSetFragment extends Fragment {
             adapter = new SkillAdapter(skillset);
             recyclerViewSkill.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-
         });
     }
 
