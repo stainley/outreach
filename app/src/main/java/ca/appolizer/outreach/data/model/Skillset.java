@@ -1,10 +1,6 @@
-package ca.appolizer.outreach.model;
-
-import androidx.annotation.NonNull;
+package ca.appolizer.outreach.data.model;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.time.LocalDateTime;
 
 public class Skillset {
 

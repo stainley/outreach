@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -13,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.model.Skillset;
+import ca.appolizer.outreach.data.model.Skillset;
+import ca.appolizer.outreach.repository.SkillSetRepository;
 
 
 public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.SkillViewHolder> {
@@ -41,11 +43,19 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.SkillViewHol
         String yearsOfExp = skillsetList.get(position).getTotalYearsExperience() + " " + context.getResources().getString(R.string.years);
         holder.skillYearTxt.setText(yearsOfExp);
 
-        holder.removeSkillBtn.setOnClickListener(view -> {
-            skillsetList.remove(position);
 
-            notifyItemRemoved(position);
-            notifyItemRangeRemoved(position, skillsetList.size());
+        holder.removeSkillBtn.setOnClickListener(view -> {
+            String token = view.getContext().getSharedPreferences("profile_info", Context.MODE_PRIVATE).getString("token", "");
+
+            String result = new SkillSetRepository().deleteStudentSkillset(token, Long.parseLong(skillsetList.get(position).getSkillsetId()));
+            if (result.contains("Skillset deleted successfully")) {
+                skillsetList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeRemoved(position, skillsetList.size());
+                Toast.makeText(view.getContext(), result, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(view.getContext(), result, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

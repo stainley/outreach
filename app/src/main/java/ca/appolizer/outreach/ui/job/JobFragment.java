@@ -2,7 +2,6 @@ package ca.appolizer.outreach.ui.job;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -22,7 +20,7 @@ import java.util.List;
 
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.databinding.FragmentJobBinding;
-import ca.appolizer.outreach.model.Job;
+import ca.appolizer.outreach.data.model.Job;
 
 public class JobFragment extends Fragment implements SearchView.OnQueryTextListener {
     private FragmentJobBinding binding;

@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.databinding.ActivityJobDescriptionBinding;
-import ca.appolizer.outreach.student.db.StudentJobDB;
+import ca.appolizer.outreach.data.database.JobDbHelper;
 
 public class JobDescriptionActivity extends AppCompatActivity {
 
@@ -56,7 +56,7 @@ public class JobDescriptionActivity extends AppCompatActivity {
 
     private void sendMessage(long userId, long jobId, String email) {
         Toast.makeText(this, "Send info", Toast.LENGTH_SHORT).show();
-        StudentJobDB db = new StudentJobDB(this);
+        JobDbHelper db = new JobDbHelper(this);
         db.applyJob(userId, jobId, email);
         finish();
     }

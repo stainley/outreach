@@ -1,6 +1,6 @@
-package ca.appolizer.outreach.model.response;
+package ca.appolizer.outreach.data.network.responses;
 
-import ca.appolizer.outreach.model.User;
+import ca.appolizer.outreach.data.model.User;
 
 public class UserResponse {
     private int id;

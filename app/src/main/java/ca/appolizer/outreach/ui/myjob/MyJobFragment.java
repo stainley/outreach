@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,9 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.appolizer.outreach.databinding.FragmentMyJobBinding;
-import ca.appolizer.outreach.model.Job;
-import ca.appolizer.outreach.model.response.JobApplied;
-import ca.appolizer.outreach.ui.job.JobAdapter;
+import ca.appolizer.outreach.data.network.responses.JobApplied;
 
 public class MyJobFragment extends Fragment {
 

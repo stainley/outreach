@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.model.Job;
+import ca.appolizer.outreach.data.model.Job;
 import ca.appolizer.outreach.ui.job.description.JobDescriptionActivity;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {

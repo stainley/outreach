@@ -19,8 +19,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 
 import ca.appolizer.outreach.databinding.ActivityMainBinding;
-import ca.appolizer.outreach.model.Student;
-import ca.appolizer.outreach.model.User;
+import ca.appolizer.outreach.data.model.Student;
+import ca.appolizer.outreach.data.model.User;
 import ca.appolizer.outreach.ui.job.JobFragment;
 
 import ca.appolizer.outreach.ui.profile.ProfileActivity;

@@ -1,7 +1,6 @@
 package ca.appolizer.outreach.ui.profile.profile;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,12 +9,12 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import ca.appolizer.outreach.controller.ApiClient;
-import ca.appolizer.outreach.model.Skillset;
-import ca.appolizer.outreach.model.Student;
-import ca.appolizer.outreach.model.request.StudentSkillsetRequest;
-import ca.appolizer.outreach.model.response.SkillsetResponse;
-import ca.appolizer.outreach.model.response.StudentSkillsetResponse;
-import ca.appolizer.outreach.model.response.UserProfileResponse;
+import ca.appolizer.outreach.data.model.Skillset;
+import ca.appolizer.outreach.data.model.Student;
+import ca.appolizer.outreach.data.network.requests.StudentSkillsetRequest;
+import ca.appolizer.outreach.data.network.responses.SkillsetResponse;
+import ca.appolizer.outreach.data.network.responses.StudentSkillsetResponse;
+import ca.appolizer.outreach.data.network.responses.UserProfileResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +26,10 @@ public class ProfileViewModel extends ViewModel {
     private MutableLiveData<List<Skillset>> skillMutableLiveData;
     private MutableLiveData<List<Skillset>> skillsetLiveData;
 
+    private MutableLiveData<String> messageLive;
+
     public ProfileViewModel(String token, long id) {
+        messageLive = new MutableLiveData<>();
         userProfile = new MutableLiveData<>();
         skillMutableLiveData = new MutableLiveData<>();
         skillsetLiveData = new MutableLiveData<>();
@@ -48,6 +50,10 @@ public class ProfileViewModel extends ViewModel {
         return skillsetLiveData;
     }
 
+    public MutableLiveData<String> getMessageLive() {
+        return messageLive;
+    }
+
     public Student getStudentProfile(String token, long id) {
         final Student[] student = new Student[1];
 
@@ -62,7 +68,6 @@ public class ProfileViewModel extends ViewModel {
                     System.out.println();
 
                     if (response.body().getStudent().getSkillsets().size() > 0) {
-
                         skillsetLiveData.setValue(response.body().getStudent().getSkillsets());
                     }
                 }
@@ -94,7 +99,6 @@ public class ProfileViewModel extends ViewModel {
         });
     }
 
-
     public void addStudentSkillset(String token, StudentSkillsetRequest request) {
 
         Call<StudentSkillsetResponse> studentSkillset = ApiClient.getUserServiceWithToken(token).addStudentSkillset(request);
@@ -103,6 +107,7 @@ public class ProfileViewModel extends ViewModel {
             public void onResponse(Call<StudentSkillsetResponse> call, Response<StudentSkillsetResponse> response) {
                 if (response.isSuccessful()) {
                     Log.i(TAG, response.message());
+                    messageLive.setValue(response.message());
                 }
             }
 

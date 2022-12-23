@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ca.appolizer.outreach.model.response.JobApplied;
-import ca.appolizer.outreach.student.db.StudentJobDB;
+import ca.appolizer.outreach.data.network.responses.JobApplied;
+import ca.appolizer.outreach.data.database.JobDbHelper;
 
 public class MyJobViewModel extends ViewModel {
 
@@ -41,7 +41,7 @@ public class MyJobViewModel extends ViewModel {
     }
 
     private List<JobApplied> getAllMyJobsApplied() {
-        StudentJobDB db = new StudentJobDB(context);
+        JobDbHelper db = new JobDbHelper(context);
         return db.getJobs();
     }
 }

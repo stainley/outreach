@@ -1,6 +1,6 @@
 package ca.appolizer.outreach.repository;
 
-import ca.appolizer.outreach.model.Student;
+import ca.appolizer.outreach.data.model.Student;
 
 public interface ProfileRepository {
 

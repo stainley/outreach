@@ -24,11 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.model.Skillset;
-import ca.appolizer.outreach.model.request.StudentSkillsetRequest;
+import ca.appolizer.outreach.data.model.Skillset;
+import ca.appolizer.outreach.data.network.requests.StudentSkillsetRequest;
 import ca.appolizer.outreach.ui.profile.profile.ProfileViewModel;
 import ca.appolizer.outreach.ui.profile.profile.ProfileViewModelProvider;
-import ca.appolizer.outreach.ui.profile.skillset.SkillAdapter;
 
 public class SkillSetFragment extends Fragment {
     List<Skillset> skills = new ArrayList<>();
@@ -82,10 +81,10 @@ public class SkillSetFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         skillSetViewModel.getSkillsetLiveData().observe(requireActivity(), skillset -> {
-
             adapter = new SkillAdapter(skillset);
             recyclerViewSkill.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemRangeChanged(0, skillset.size());
+            //adapter.notifyDataSetChanged();
         });
     }
 

@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.model;
+package ca.appolizer.outreach.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 
 public class Skill implements Serializable {
-
     private int id;
     private String name;
     @SerializedName("created_at")

@@ -23,7 +23,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import ca.appolizer.outreach.MainActivity;
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.model.Student;
+import ca.appolizer.outreach.data.model.Student;
 
 public class ProfileFragment extends Fragment {
 
@@ -80,7 +80,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
         availabilitySpinner.setAdapter(studentAvailability);
     }
 
@@ -111,4 +110,7 @@ public class ProfileFragment extends Fragment {
         availabilitySpinner.setEnabled(!availabilitySpinner.isEnabled());
     }
 
+    interface SkillSetHandlerCallback {
+        String onDeleteSkillset();
+    }
 }

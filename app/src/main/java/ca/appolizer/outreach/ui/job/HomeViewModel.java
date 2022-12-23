@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.appolizer.outreach.controller.ApiClient;
-import ca.appolizer.outreach.model.Job;
-import ca.appolizer.outreach.model.JobList;
+import ca.appolizer.outreach.data.model.Job;
+import ca.appolizer.outreach.data.model.JobList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

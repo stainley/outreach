@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.model.response;
+package ca.appolizer.outreach.data.network.responses;
 
 public class JobApplied {
     private long userId;

@@ -1,8 +1,8 @@
-package ca.appolizer.outreach.model.response;
+package ca.appolizer.outreach.data.network.responses;
 
 import com.google.gson.annotations.SerializedName;
 
-import ca.appolizer.outreach.model.Skillset;
+import ca.appolizer.outreach.data.model.Skillset;
 
 public class StudentSkillsetResponse {
 
