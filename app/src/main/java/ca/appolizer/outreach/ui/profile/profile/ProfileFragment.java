@@ -21,6 +21,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
 import ca.appolizer.outreach.MainActivity;
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.data.model.Student;
@@ -61,13 +63,13 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sharedPreferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREFERENCES, MODE_PRIVATE);
+        sharedPreferences = requireActivity().getSharedPreferences(MainActivity.SHARED_PREFERENCES, MODE_PRIVATE);
         long userId = sharedPreferences.getLong("user_id", 0);
         String token = sharedPreferences.getString("token", "");
 
         profileViewModel = new ViewModelProvider(this, new ProfileViewModelProvider(token, userId)).get(ProfileViewModel.class);
         ArrayAdapter<String> studentAvailability = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.availability));
-        profileViewModel.getUserProfile().observe(getActivity(), userProfileResponse -> {
+        profileViewModel.getUserProfile().observe(requireActivity(), userProfileResponse -> {
             if (userProfileResponse != null) {
                 Student student = userProfileResponse.getStudent();
                 firstNameTxt.setText(student.getFirstName());

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import ca.appolizer.outreach.controller.ApiClient;
+import ca.appolizer.outreach.data.database.DBHelper;
 import ca.appolizer.outreach.data.model.Skillset;
 import ca.appolizer.outreach.data.model.Student;
 import ca.appolizer.outreach.data.network.requests.StudentSkillsetRequest;

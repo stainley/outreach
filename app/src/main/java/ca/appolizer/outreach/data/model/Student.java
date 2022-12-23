@@ -1,18 +1,26 @@
 package ca.appolizer.outreach.data.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Entity
 public class Student implements Serializable {
+    @PrimaryKey
     private long id;
     @SerializedName("user_id")
     @Expose
     private String userId;
+    @ColumnInfo(name = "first_name")
     @SerializedName("first_name")
     private String firstName;
+    @ColumnInfo(name = "last_name")
     @SerializedName("last_name")
     private String lastName;
     @SerializedName("contact_number")
