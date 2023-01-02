@@ -2,7 +2,7 @@ package ca.appolizer.outreach.data.model;
 
 import androidx.room.Entity;
 
-@Entity
+
 public class Job {
     private long id;
     private int user_id;
