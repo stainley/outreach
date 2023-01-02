@@ -1,16 +1,14 @@
 package ca.appolizer.outreach.ui.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,36 +16,30 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import ca.appolizer.outreach.MainActivity;
-import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.controller.ApiClient;
 import ca.appolizer.outreach.data.model.User;
 import ca.appolizer.outreach.data.network.requests.StudentUserRequest;
 import ca.appolizer.outreach.data.network.responses.UserResponse;
-import ca.appolizer.outreach.ui.register.RegisterActivity;
+import ca.appolizer.outreach.databinding.ActivityLoginBinding;
 import ca.appolizer.outreach.ui.custom.CustomProgressDialog;
 import ca.appolizer.outreach.ui.job.JobFragment;
+import ca.appolizer.outreach.ui.register.RegisterActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText emailAddressTxt;
-    private EditText passwordTxt;
+
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        emailAddressTxt = findViewById(R.id.txtEmailAddress);
-        passwordTxt = findViewById(R.id.txtPassword);
-        Button completeRegister = findViewById(R.id.btnCompleteRegister);
-        completeRegister.setOnClickListener(view -> {
-            loginUser(createRequest());
-        });
-
-        Button createAccountBtn = findViewById(R.id.createAccount);
-        createAccountBtn.setOnClickListener(this::invokeCreateAccountView);
+        binding.btnCompleteRegister.setOnClickListener(view -> loginUser(createRequest()));
+        binding.createAccount.setOnClickListener(this::invokeCreateAccountView);
     }
 
     private void invokeCreateAccountView(View view) {
@@ -58,8 +50,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public StudentUserRequest createRequest() {
         StudentUserRequest studentRequest = new StudentUserRequest();
-        studentRequest.setEmail(emailAddressTxt.getText().toString());
-        studentRequest.setPassword(passwordTxt.getText().toString());
+        studentRequest.setEmail(binding.txtEmailAddress.getText().toString());
+        studentRequest.setPassword(binding.txtPassword.getText().toString());
 
         return studentRequest;
     }

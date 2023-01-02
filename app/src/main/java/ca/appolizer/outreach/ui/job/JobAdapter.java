@@ -27,6 +27,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     private long studentId;
     private String email;
 
+
     public JobAdapter(Fragment context, long studentId, String email) {
         this.context = context;
         this.studentId = studentId;
@@ -51,6 +52,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View jobView = inflater.inflate(R.layout.fragment_card_job, parent, false);
+
+
         RecyclerView.ViewHolder viewHolder = new JobHolder(jobView);
         return (JobHolder) viewHolder;
     }
