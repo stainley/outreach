@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.model;
+package ca.appolizer.outreach.data.model;
 
 import java.io.Serializable;
 
@@ -38,5 +38,19 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public enum TypeUser {
+        STUDENT(3), EMPLOYEE(2), ADMIN(1);
+
+        TypeUser(int code) {
+            this.code = code;
+        }
+
+        private final int code;
+
+        public int getCode() {
+            return this.code;
+        }
     }
 }

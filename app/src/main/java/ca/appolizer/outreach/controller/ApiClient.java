@@ -11,14 +11,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * API client to manage connection to the API
- *
  */
 public class ApiClient {
 
-    private final String token;
-
-    public ApiClient(String token) {
-        this.token = token;
+    public ApiClient() {
     }
 
     private static Retrofit getRetrofit() {
@@ -29,13 +25,11 @@ public class ApiClient {
                 .addInterceptor(httpLoggingInterceptor)
                 .build();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://nevisco.ca/")
+        return new Retrofit.Builder()
+                .baseUrl("https://nevisco.ca/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
-
-        return retrofit;
     }
 
     private static Retrofit getRetrofitWithToken(String token) {
@@ -53,23 +47,19 @@ public class ApiClient {
                 })
                 .build();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://nevisco.ca/")
+        return new Retrofit.Builder()
+                .baseUrl("https://nevisco.ca/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
-
-        return retrofit;
     }
 
     public static UserService getUserService() {
-        UserService userService = getRetrofit().create(UserService.class);
-        return userService;
+        return getRetrofit().create(UserService.class);
     }
 
     public static UserService getUserServiceWithToken(String token) {
-        UserService userService = getRetrofitWithToken(token).create(UserService.class);
-        return userService;
+        return getRetrofitWithToken(token).create(UserService.class);
     }
 
 }

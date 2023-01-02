@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.model.request;
+package ca.appolizer.outreach.data.network.requests;
 
 public class AbstractUserRequest implements UserRequest {
     private String email;

@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.student.db;
+package ca.appolizer.outreach.data.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,9 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.appolizer.outreach.model.response.JobApplied;
+import ca.appolizer.outreach.data.network.responses.JobApplied;
 
-public class StudentJobDB extends SQLiteOpenHelper {
+public class JobDbHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "jobs.db";
     private static final int DB_VERSION = 1;
@@ -21,7 +21,7 @@ public class StudentJobDB extends SQLiteOpenHelper {
     private static final String COLUMN_JOB_ID = "JOB_ID";
     private static final String COLUMN_USER_EMAIL = "USER_EMAIL";
 
-    public StudentJobDB(Context context) {
+    public JobDbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

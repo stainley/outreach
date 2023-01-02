@@ -1,8 +1,8 @@
 package ca.appolizer.outreach.repository;
 
 import ca.appolizer.outreach.controller.ApiClient;
-import ca.appolizer.outreach.model.request.AbstractUserRequest;
-import ca.appolizer.outreach.model.response.UserResponse;
+import ca.appolizer.outreach.data.network.requests.AbstractUserRequest;
+import ca.appolizer.outreach.data.network.responses.UserResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

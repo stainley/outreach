@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.model;
+package ca.appolizer.outreach.data.model;
 
 import com.google.gson.annotations.SerializedName;
 

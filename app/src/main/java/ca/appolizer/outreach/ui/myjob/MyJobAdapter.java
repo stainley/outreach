@@ -1,11 +1,9 @@
 package ca.appolizer.outreach.ui.myjob;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.model.response.JobApplied;
+import ca.appolizer.outreach.data.network.responses.JobApplied;
 
 public class MyJobAdapter extends RecyclerView.Adapter<MyJobAdapter.MyJobViewHolder> {
 

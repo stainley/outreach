@@ -47,7 +47,7 @@
 
         <activity
             android:name=".ui.profile.ProfileActivity"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".MainActivity" />
 
         <service

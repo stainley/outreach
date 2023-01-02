@@ -19,9 +19,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 
 import ca.appolizer.outreach.databinding.ActivityMainBinding;
-import ca.appolizer.outreach.model.Student;
-import ca.appolizer.outreach.model.User;
+import ca.appolizer.outreach.data.model.Student;
+import ca.appolizer.outreach.data.model.User;
 import ca.appolizer.outreach.ui.job.JobFragment;
+
 import ca.appolizer.outreach.ui.profile.ProfileActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveUserDetailSP(User user) {
         SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE).edit();
-        editor.putString("name", user.getStudent().getFirst_name() + " " + user.getStudent().getLast_name());
+        editor.putString("name", user.getStudent().getFirstName() + " " + user.getStudent().getLastName());
         editor.putString("email", user.getEmail());
         editor.putString("password", user.getPassword());
         editor.putString("token", token != null ? token : "");
@@ -133,11 +134,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_profile:
-                Intent intent = new Intent(this, ProfileActivity.class);
-                intent.putExtra("id", id);
-                intent.putExtra("token", token);
-                intent.putExtra("student_profile", user);
-                startActivity(intent);
+                Intent settingIntent = new Intent(this, ProfileActivity.class);
+                startActivity(settingIntent);
+                break;
+            case R.id.action_section:
+
                 break;
         }
         return super.onOptionsItemSelected(item);
