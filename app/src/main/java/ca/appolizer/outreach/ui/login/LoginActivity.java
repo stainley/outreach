@@ -17,12 +17,11 @@ import java.io.IOException;
 
 import ca.appolizer.outreach.MainActivity;
 import ca.appolizer.outreach.controller.ApiClient;
-import ca.appolizer.outreach.data.model.User;
+import ca.appolizer.outreach.data.dto.UserDto;
 import ca.appolizer.outreach.data.network.requests.StudentUserRequest;
 import ca.appolizer.outreach.data.network.responses.UserResponse;
 import ca.appolizer.outreach.databinding.ActivityLoginBinding;
 import ca.appolizer.outreach.ui.custom.CustomProgressDialog;
-import ca.appolizer.outreach.ui.job.JobFragment;
 import ca.appolizer.outreach.ui.register.RegisterActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,16 +67,14 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     if (response.body().getStatus().equals("true")) {
-                        Fragment homeFragment = new JobFragment();
-                        FragmentManager fm = getSupportFragmentManager();
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        User user = response.body().getUser();
+                        UserDto userDto = response.body().getUser();
 
-                        intent.putExtra("id", user.getId());
+                        intent.putExtra("id", userDto.getId());
 
                         intent.putExtra("token", response.body().getToken());
-                        intent.putExtra("user", user);
+                        intent.putExtra("userDto", userDto);
                         intent.putExtra("first_name", response.body().getUser().getStudent().getFirstName() != null ? response.body().getUser().getStudent().getFirstName() : "");
                         intent.putExtra("last_name", response.body().getUser().getStudent().getLastName() != null ? response.body().getUser().getStudent().getLastName() : "");
 

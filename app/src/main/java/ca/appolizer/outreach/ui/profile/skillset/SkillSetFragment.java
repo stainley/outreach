@@ -24,13 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.data.model.Skillset;
+import ca.appolizer.outreach.data.dto.SkillsetDto;
 import ca.appolizer.outreach.data.network.requests.StudentSkillsetRequest;
 import ca.appolizer.outreach.ui.profile.profile.ProfileViewModel;
 import ca.appolizer.outreach.ui.profile.profile.ProfileViewModelProvider;
 
 public class SkillSetFragment extends Fragment {
-    List<Skillset> skills = new ArrayList<>();
+    List<SkillsetDto> skills = new ArrayList<>();
     private RecyclerView recyclerViewSkill;
     private SkillAdapter adapter;
     private ProfileViewModel skillSetViewModel;
@@ -48,14 +48,14 @@ public class SkillSetFragment extends Fragment {
 
         skillSetViewModel.getSkillMutableLiveData().observe(requireActivity(), skillet -> skills.addAll(skillet));
 
-        ArrayAdapter<Skillset> arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item, skills);
+        ArrayAdapter<SkillsetDto> arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item, skills);
         dropdownSkill.setAdapter(arrayAdapter);
 
-        final Skillset[] skillset = new Skillset[1];
+        final SkillsetDto[] skillsetDto = new SkillsetDto[1];
 
         dropdownSkill.setOnItemClickListener((parent, view1, position, id) -> {
             Toast.makeText(getContext(), "SELECTED: " + skills.get(position), Toast.LENGTH_SHORT).show();
-            skillset[0] = skills.get(position);
+            skillsetDto[0] = skills.get(position);
         });
 
         addSkillButton.setOnClickListener(viewButton -> {
@@ -66,7 +66,7 @@ public class SkillSetFragment extends Fragment {
                 return;
             }
 
-            StudentSkillsetRequest request = new StudentSkillsetRequest((int) getUserId(), skillset[0].getId(), Integer.parseInt(year));
+            StudentSkillsetRequest request = new StudentSkillsetRequest((int) getUserId(), skillsetDto[0].getId(), Integer.parseInt(year));
             skillSetViewModel.addStudentSkillset(getToken(), request);
 
             arrayAdapter.notifyDataSetChanged();

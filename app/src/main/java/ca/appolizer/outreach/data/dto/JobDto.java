@@ -1,18 +1,16 @@
-package ca.appolizer.outreach.data.model;
-
-import androidx.room.Entity;
+package ca.appolizer.outreach.data.dto;
 
 
-public class Job {
+public class JobDto {
     private long id;
     private int user_id;
     private String name;
     private String description;
 
-    public Job() {
+    public JobDto() {
     }
 
-    public Job(String name, String description) {
+    public JobDto(String name, String description) {
         this.name = name;
         this.description = description;
     }

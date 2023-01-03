@@ -14,17 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.data.model.Skillset;
+import ca.appolizer.outreach.data.dto.SkillsetDto;
 import ca.appolizer.outreach.repository.SkillSetRepository;
 
 
 public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.SkillViewHolder> {
 
-    private final List<Skillset> skillsetList;
+    private final List<SkillsetDto> skillsetDtoList;
     private Context context;
 
-    public SkillAdapter(List<Skillset> skillsetList) {
-        this.skillsetList = skillsetList;
+    public SkillAdapter(List<SkillsetDto> skillsetDtoList) {
+        this.skillsetDtoList = skillsetDtoList;
     }
 
 
@@ -39,19 +39,19 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.SkillViewHol
 
     @Override
     public void onBindViewHolder(@NonNull SkillViewHolder holder, int position) {
-        holder.skillNameTxt.setText(skillsetList.get(position).getSkill().getName());
-        String yearsOfExp = skillsetList.get(position).getTotalYearsExperience() + " " + context.getResources().getString(R.string.years);
+        holder.skillNameTxt.setText(skillsetDtoList.get(position).getSkill().getName());
+        String yearsOfExp = skillsetDtoList.get(position).getTotalYearsExperience() + " " + context.getResources().getString(R.string.years);
         holder.skillYearTxt.setText(yearsOfExp);
 
 
         holder.removeSkillBtn.setOnClickListener(view -> {
             String token = view.getContext().getSharedPreferences("profile_info", Context.MODE_PRIVATE).getString("token", "");
 
-            String result = new SkillSetRepository().deleteStudentSkillset(token, Long.parseLong(skillsetList.get(position).getSkillsetId()));
-            if (result.contains("Skillset deleted successfully")) {
-                skillsetList.remove(position);
+            String result = new SkillSetRepository().deleteStudentSkillset(token, Long.parseLong(skillsetDtoList.get(position).getSkillsetId()));
+            if (result.contains("SkillsetDto deleted successfully")) {
+                skillsetDtoList.remove(position);
                 notifyItemRemoved(position);
-                notifyItemRangeRemoved(position, skillsetList.size());
+                notifyItemRangeRemoved(position, skillsetDtoList.size());
                 Toast.makeText(view.getContext(), result, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(view.getContext(), result, Toast.LENGTH_SHORT).show();
@@ -61,7 +61,7 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.SkillViewHol
 
     @Override
     public int getItemCount() {
-        return skillsetList.size();
+        return skillsetDtoList.size();
     }
 
     static class SkillViewHolder extends RecyclerView.ViewHolder {

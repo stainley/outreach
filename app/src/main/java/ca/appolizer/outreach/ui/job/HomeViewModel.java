@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.appolizer.outreach.controller.ApiClient;
-import ca.appolizer.outreach.data.model.Job;
-import ca.appolizer.outreach.data.model.JobList;
+import ca.appolizer.outreach.data.dto.JobDto;
+import ca.appolizer.outreach.data.dto.JobListDto;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,8 +21,8 @@ import retrofit2.Response;
 public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
-    private MutableLiveData<List<Job>> mJobList;
-    private List<Job> jobList;
+    private MutableLiveData<List<JobDto>> mJobList;
+    private List<JobDto> jobDtoList;
 
     private JobAdapter jobAdapter;
 
@@ -31,7 +31,7 @@ public class HomeViewModel extends ViewModel {
 
     public HomeViewModel(Context context, String token, JobAdapter jobAdapter) {
         mJobList = new MutableLiveData<>();
-        jobList = new ArrayList<>();
+        jobDtoList = new ArrayList<>();
         this.context = context;
         this.token = token;
         this.jobAdapter = jobAdapter;
@@ -42,34 +42,34 @@ public class HomeViewModel extends ViewModel {
         return mText;
     }
 
-    public MutableLiveData<List<Job>> getJobList() {
+    public MutableLiveData<List<JobDto>> getJobList() {
         return mJobList;
     }
 
     private void init() {
         fetchAllJobs();
-        mJobList.setValue(jobList);
+        mJobList.setValue(jobDtoList);
     }
 
-    private List<Job> fetchAllJobs() {
-        Call<JobList> fetchAllJobs = ApiClient.getUserServiceWithToken(token).fetchAllJobs();
-        fetchAllJobs.enqueue(new Callback<JobList>() {
+    private List<JobDto> fetchAllJobs() {
+        Call<JobListDto> fetchAllJobs = ApiClient.getUserServiceWithToken(token).fetchAllJobs();
+        fetchAllJobs.enqueue(new Callback<JobListDto>() {
             @Override
-            public void onResponse(Call<JobList> call, Response<JobList> response) {
+            public void onResponse(Call<JobListDto> call, Response<JobListDto> response) {
                 if (response.isSuccessful()) {
-                    List<Job> jb = response.body().getJobs();
-                    jobList.addAll(jb);
-                    Log.i("SERVICIO ", "" + jobList.size());
+                    List<JobDto> jb = response.body().getJobs();
+                    jobDtoList.addAll(jb);
+                    Log.i("SERVICIO ", "" + jobDtoList.size());
                     jobAdapter.add(jb);
                 }
             }
 
             @Override
-            public void onFailure(Call<JobList> call, Throwable t) {
+            public void onFailure(Call<JobListDto> call, Throwable t) {
                 Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        return jobList;
+        return jobDtoList;
     }
 }

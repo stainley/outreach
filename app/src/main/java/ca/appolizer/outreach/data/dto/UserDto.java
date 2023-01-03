@@ -1,12 +1,16 @@
-package ca.appolizer.outreach.data.model;
+package ca.appolizer.outreach.data.dto;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class UserDto implements Serializable {
     private Long id;
     private String email;
     private String password;
-    private Student student;
+
+    @SerializedName("student")
+    private StudentDto studentDto;
 
     public Long getId() {
         return id;
@@ -24,12 +28,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public Student getStudent() {
-        return student;
+    public StudentDto getStudent() {
+        return studentDto;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudent(StudentDto studentDto) {
+        this.studentDto = studentDto;
     }
 
     public String getPassword() {

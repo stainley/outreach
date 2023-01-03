@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.data.model.User;
+import ca.appolizer.outreach.data.dto.UserDto;
 import ca.appolizer.outreach.data.network.requests.AbstractUserRequest;
 import ca.appolizer.outreach.data.network.requests.EmployeeUserRequest;
 import ca.appolizer.outreach.data.network.requests.StudentUserRequest;
@@ -58,13 +58,13 @@ public class RegisterActivity extends AppCompatActivity {
                     request = new EmployeeUserRequest();
                     request.setEmail(email);
                     request.setPassword(password);
-                    request.setUser_type_id(User.TypeUser.EMPLOYEE.getCode());
+                    request.setUser_type_id(UserDto.TypeUser.EMPLOYEE.getCode());
                     new RegisterRepositoryImpl().register(request);
                 } else {
                     request = new StudentUserRequest();
                     request.setEmail(email);
                     request.setPassword(password);
-                    request.setUser_type_id(User.TypeUser.STUDENT.getCode());
+                    request.setUser_type_id(UserDto.TypeUser.STUDENT.getCode());
                     new RegisterRepositoryImpl().register(request);
                 }
             } else {

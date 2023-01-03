@@ -5,20 +5,20 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import ca.appolizer.outreach.data.model.Student;
+import ca.appolizer.outreach.data.dto.StudentDto;
 
 @Dao
 public interface StudentDao {
 
     @Insert
-    void insertStudent(Student student);
+    void insertStudent(StudentDto studentDto);
 
     @Delete
     void deleteStudents();
 
     @Delete
-    void deleteStudent(Student student);
+    void deleteStudent(StudentDto studentDto);
 
-    @Query("SELECT * FROM Student")
-    Student getStudentInfo();
+    @Query("SELECT * FROM StudentDto")
+    StudentDto getStudentInfo();
 }

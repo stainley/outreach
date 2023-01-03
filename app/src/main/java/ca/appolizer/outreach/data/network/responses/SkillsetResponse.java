@@ -4,18 +4,18 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import ca.appolizer.outreach.data.model.Skillset;
+import ca.appolizer.outreach.data.dto.SkillsetDto;
 
 public class SkillsetResponse {
 
     @SerializedName("skillset")
-    private List<Skillset> skillset;
+    private List<SkillsetDto> skillsetDto;
 
-    public List<Skillset> getSkillset() {
-        return skillset;
+    public List<SkillsetDto> getSkillset() {
+        return skillsetDto;
     }
 
-    public void setSkillset(List<Skillset> skillset) {
-        this.skillset = skillset;
+    public void setSkillset(List<SkillsetDto> skillsetDto) {
+        this.skillsetDto = skillsetDto;
     }
 }

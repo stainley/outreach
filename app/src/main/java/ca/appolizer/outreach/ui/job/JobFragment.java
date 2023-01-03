@@ -19,8 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ca.appolizer.outreach.R;
+import ca.appolizer.outreach.data.dto.JobDto;
 import ca.appolizer.outreach.databinding.FragmentJobBinding;
-import ca.appolizer.outreach.data.model.Job;
+
 
 public class JobFragment extends Fragment implements SearchView.OnQueryTextListener {
     private FragmentJobBinding binding;
@@ -71,11 +72,11 @@ public class JobFragment extends Fragment implements SearchView.OnQueryTextListe
         }
     }
 
-    private Observer<List<Job>> jobListUpdateObserver = new Observer<List<Job>>() {
+    private Observer<List<JobDto>> jobListUpdateObserver = new Observer<List<JobDto>>() {
         @Override
-        public void onChanged(List<Job> jobs) {
-            if (jobs != null) {
-                adapter.jobs = jobs;
+        public void onChanged(List<JobDto> jobDtos) {
+            if (jobDtos != null) {
+                adapter.jobDtos = jobDtos;
                 adapter.notifyDataSetChanged();
             }
         }

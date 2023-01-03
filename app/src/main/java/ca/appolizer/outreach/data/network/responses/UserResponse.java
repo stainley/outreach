@@ -1,13 +1,16 @@
 package ca.appolizer.outreach.data.network.responses;
 
-import ca.appolizer.outreach.data.model.User;
+import com.google.gson.annotations.SerializedName;
+
+import ca.appolizer.outreach.data.dto.UserDto;
 
 public class UserResponse {
     private int id;
     private String token;
     private String status;
     private String message;
-    private User user;
+    @SerializedName("user")
+    private UserDto userDto;
 
     public int getId() {
         return id;
@@ -41,11 +44,11 @@ public class UserResponse {
         this.message = message;
     }
 
-    public User getUser() {
-        return user;
+    public UserDto getUser() {
+        return userDto;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserDto userDto) {
+        this.userDto = userDto;
     }
 }

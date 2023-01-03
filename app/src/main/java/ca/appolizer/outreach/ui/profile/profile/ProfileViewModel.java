@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import ca.appolizer.outreach.controller.ApiClient;
-import ca.appolizer.outreach.data.model.Skillset;
-import ca.appolizer.outreach.data.model.Student;
+import ca.appolizer.outreach.data.dto.SkillsetDto;
+import ca.appolizer.outreach.data.dto.StudentDto;
 import ca.appolizer.outreach.data.network.requests.StudentSkillsetRequest;
 import ca.appolizer.outreach.data.network.responses.SkillsetResponse;
 import ca.appolizer.outreach.data.network.responses.StudentSkillsetResponse;
@@ -23,8 +23,8 @@ public class ProfileViewModel extends ViewModel {
 
     private static final String TAG = ProfileViewModel.class.getName();
     private MutableLiveData<UserProfileResponse> userProfile;
-    private MutableLiveData<List<Skillset>> skillMutableLiveData;
-    private MutableLiveData<List<Skillset>> skillsetLiveData;
+    private MutableLiveData<List<SkillsetDto>> skillMutableLiveData;
+    private MutableLiveData<List<SkillsetDto>> skillsetLiveData;
 
     private MutableLiveData<String> messageLive;
 
@@ -42,11 +42,11 @@ public class ProfileViewModel extends ViewModel {
         return userProfile;
     }
 
-    public MutableLiveData<List<Skillset>> getSkillMutableLiveData() {
+    public MutableLiveData<List<SkillsetDto>> getSkillMutableLiveData() {
         return skillMutableLiveData;
     }
 
-    public LiveData<List<Skillset>> getSkillsetLiveData() {
+    public LiveData<List<SkillsetDto>> getSkillsetLiveData() {
         return skillsetLiveData;
     }
 
@@ -54,16 +54,16 @@ public class ProfileViewModel extends ViewModel {
         return messageLive;
     }
 
-    public Student getStudentProfile(String token, long id) {
-        final Student[] student = new Student[1];
+    public StudentDto getStudentProfile(String token, long id) {
+        final StudentDto[] studentDto = new StudentDto[1];
 
         Call<UserProfileResponse> studentInfo = ApiClient.getUserServiceWithToken(token).getStudentInfo(id);
         studentInfo.enqueue(new Callback<UserProfileResponse>() {
             @Override
             public void onResponse(Call<UserProfileResponse> call, Response<UserProfileResponse> response) {
                 if (response.isSuccessful()) {
-                    Student student1 = response.body().getStudent();
-                    student[0] = student1;
+                    StudentDto studentDto1 = response.body().getStudent();
+                    studentDto[0] = studentDto1;
                     userProfile.setValue(response.body());
                     System.out.println();
 
@@ -78,7 +78,7 @@ public class ProfileViewModel extends ViewModel {
 
             }
         });
-        return student[0];
+        return studentDto[0];
     }
 
     private void getAllSkillSet(String token) {

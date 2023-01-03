@@ -1,8 +1,8 @@
 package ca.appolizer.outreach.repository;
 
-import ca.appolizer.outreach.data.model.Student;
+import ca.appolizer.outreach.data.dto.StudentDto;
 
 public interface ProfileRepository {
 
-    Student getRepository(long id);
+    StudentDto getRepository(long id);
 }

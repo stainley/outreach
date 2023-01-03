@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.data.model.Job;
+import ca.appolizer.outreach.data.dto.JobDto;
 import ca.appolizer.outreach.ui.job.description.JobDescriptionActivity;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
-    public List<Job> jobs;
-    private static List<Job> arrayListJobs = new ArrayList<>();
+    public List<JobDto> jobDtos;
+    private static List<JobDto> arrayListJobDtos = new ArrayList<>();
     private final Fragment context;
     private long studentId;
     private String email;
@@ -32,15 +32,15 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
         this.context = context;
         this.studentId = studentId;
         this.email = email;
-        if (jobs != null) {
-            arrayListJobs = jobs;
+        if (jobDtos != null) {
+            arrayListJobDtos = jobDtos;
         }
     }
 
-    public void add(List<Job> jobsAdded) {
+    public void add(List<JobDto> jobsAdded) {
         if (jobsAdded != null && jobsAdded.size() > 0) {
-            //jobs.addAll(jobsAdded);
-            this.arrayListJobs = jobsAdded;
+            //jobDtos.addAll(jobsAdded);
+            this.arrayListJobDtos = jobsAdded;
             notifyDataSetChanged();
         }
     }
@@ -61,14 +61,14 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
     @Override
     public void onBindViewHolder(@NonNull JobHolder holder, int position) {
 
-        holder.titleTextView.setText(jobs.get(position).getName());
+        holder.titleTextView.setText(jobDtos.get(position).getName());
 
         holder.cardJob.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), JobDescriptionActivity.class);
-            intent.putExtra("id", jobs.get(position).getId());
-            intent.putExtra("name", jobs.get(position).getName());
+            intent.putExtra("id", jobDtos.get(position).getId());
+            intent.putExtra("name", jobDtos.get(position).getName());
             intent.putExtra("email", email);
-            intent.putExtra("description", jobs.get(position).getDescription());
+            intent.putExtra("description", jobDtos.get(position).getDescription());
             intent.putExtra("student_id", studentId);
             context.startActivity(intent);
         });
@@ -76,14 +76,14 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     public void filter(String text) {
         text = text.toLowerCase();
-        jobs.clear();
+        jobDtos.clear();
 
         if (text.length() == 0) {
-            jobs.addAll(arrayListJobs);
+            jobDtos.addAll(arrayListJobDtos);
         } else {
             StringBuilder sb = new StringBuilder();
             sb.append(text);
-            jobs = arrayListJobs.stream().filter(job -> job.getName().toLowerCase().contains(sb))
+            jobDtos = arrayListJobDtos.stream().filter(job -> job.getName().toLowerCase().contains(sb))
                     .collect(Collectors.toList());
 
         }
@@ -92,7 +92,7 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobHolder> {
 
     @Override
     public int getItemCount() {
-        return jobs != null ? jobs.size() : 0;
+        return jobDtos != null ? jobDtos.size() : 0;
     }
 
     class JobHolder extends RecyclerView.ViewHolder {

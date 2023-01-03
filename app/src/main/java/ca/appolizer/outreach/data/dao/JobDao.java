@@ -7,23 +7,23 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ca.appolizer.outreach.data.model.Job;
+import ca.appolizer.outreach.data.dto.JobDto;
 
 @Dao
 public interface JobDao {
 
     @Query("SELECT * FROM  Job")
-    List<Job> getAllJobs();
+    List<JobDto> getAllJobs();
 
     @Query("SELECT * FROM Job WHERE id IN (:ids)")
-    List<Job> getAllJobsById(int[] ids);
+    List<JobDto> getAllJobsById(int[] ids);
 
     @Insert
-    void insertAllJobs(Job... jobs);
+    void insertAllJobs(JobDto... jobDtos);
 
     @Delete
     void deleteAllJobs();
 
     @Delete
-    void deleteJob(Job job);
+    void deleteJob(JobDto jobDto);
 }

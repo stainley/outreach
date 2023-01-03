@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import ca.appolizer.outreach.data.model.Student;
+import ca.appolizer.outreach.data.dto.StudentDto;
 
 public class UserProfileResponse implements Serializable {
     private boolean status;
@@ -14,7 +14,7 @@ public class UserProfileResponse implements Serializable {
 
     @SerializedName("student")
     @Expose
-    private Student student;
+    private StudentDto studentDto;
 
     public boolean isStatus() {
         return status;
@@ -32,11 +32,11 @@ public class UserProfileResponse implements Serializable {
         this.completeSkills = completeSkills;
     }
 
-    public Student getStudent() {
-        return student;
+    public StudentDto getStudent() {
+        return studentDto;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudent(StudentDto studentDto) {
+        this.studentDto = studentDto;
     }
 }

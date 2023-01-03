@@ -13,7 +13,7 @@ import ca.appolizer.outreach.data.network.responses.JobApplied;
 
 public class JobDbHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "jobs.db";
+    private static final String DB_NAME = "jobDtos.db";
     private static final int DB_VERSION = 1;
     private static final String TBL_NAME = "MY_JOB";
     private static final String COLUMN_ID = "ID";

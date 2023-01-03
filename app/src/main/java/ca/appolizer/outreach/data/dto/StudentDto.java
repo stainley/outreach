@@ -1,4 +1,4 @@
-package ca.appolizer.outreach.data.model;
+package ca.appolizer.outreach.data.dto;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -10,17 +10,15 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
-public class Student implements Serializable {
-    @PrimaryKey
+public class StudentDto implements Serializable {
     private long id;
     @SerializedName("user_id")
     @Expose
     private String userId;
-    @ColumnInfo(name = "first_name")
+
     @SerializedName("first_name")
     private String firstName;
-    @ColumnInfo(name = "last_name")
+
     @SerializedName("last_name")
     private String lastName;
     @SerializedName("contact_number")
@@ -31,8 +29,7 @@ public class Student implements Serializable {
     private String about;
 
     @SerializedName("skillsets")
-    @Expose
-    private List<Skillset> skillsets;
+    private List<SkillsetDto> skillsetDtos;
 
     public String getFirstName() {
         return firstName;
@@ -107,11 +104,11 @@ public class Student implements Serializable {
         this.contactNumber = contactNumber;
     }
 
-    public List<Skillset> getSkillsets() {
-        return skillsets;
+    public List<SkillsetDto> getSkillsets() {
+        return skillsetDtos;
     }
 
-    public void setSkillsets(List<Skillset> skillsets) {
-        this.skillsets = skillsets;
+    public void setSkillsets(List<SkillsetDto> skillsetDtos) {
+        this.skillsetDtos = skillsetDtos;
     }
 }

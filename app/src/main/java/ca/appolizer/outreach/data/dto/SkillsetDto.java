@@ -1,8 +1,8 @@
-package ca.appolizer.outreach.data.model;
+package ca.appolizer.outreach.data.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Skillset {
+public class SkillsetDto {
 
     private int id;
     @SerializedName("student_id")
@@ -13,7 +13,7 @@ public class Skillset {
     private String totalYearsExperience;
 
     @SerializedName("skill")
-    private Skill skill;
+    private SkillDto skillDto;
 
     private String name;
 
@@ -25,7 +25,7 @@ public class Skillset {
         this.id = id;
     }
 
-    public Skillset(String name) {
+    public SkillsetDto(String name) {
         this.name = name;
     }
 
@@ -53,12 +53,12 @@ public class Skillset {
         this.totalYearsExperience = totalYearsExperience;
     }
 
-    public Skill getSkill() {
-        return skill;
+    public SkillDto getSkill() {
+        return skillDto;
     }
 
-    public void setSkill(Skill skill) {
-        this.skill = skill;
+    public void setSkill(SkillDto skillDto) {
+        this.skillDto = skillDto;
     }
 
     @Override

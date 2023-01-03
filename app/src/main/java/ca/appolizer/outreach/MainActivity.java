@@ -18,11 +18,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
-import ca.appolizer.outreach.databinding.ActivityMainBinding;
-import ca.appolizer.outreach.data.model.Student;
-import ca.appolizer.outreach.data.model.User;
-import ca.appolizer.outreach.ui.job.JobFragment;
+import ca.appolizer.outreach.data.dto.StudentDto;
+import ca.appolizer.outreach.data.dto.UserDto;
 
+import ca.appolizer.outreach.databinding.ActivityMainBinding;
+import ca.appolizer.outreach.ui.job.JobFragment;
 import ca.appolizer.outreach.ui.profile.ProfileActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static String token;
     private static long id;
 
-    private User user;
+    private UserDto userDto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         id = intent.getLongExtra("id", 0);
-        Student student = (Student) intent.getSerializableExtra("student");
+        StudentDto studentDto = (StudentDto) intent.getSerializableExtra("studentDto");
         token = intent.getStringExtra("token");
         String email = intent.getStringExtra("email");
         String firstName = intent.getStringExtra("first_name");
         String lastName = intent.getStringExtra("last_name");
         String password = intent.getStringExtra("password");
-        user = (User) intent.getSerializableExtra("user");
+        userDto = (UserDto) intent.getSerializableExtra("userDto");
 
         JobFragment jobFragment = new JobFragment();
         Bundle bundle = new Bundle();
@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
         loginNameView = headerView.findViewById(R.id.loginNameTxt);
         loginEmailView = headerView.findViewById(R.id.loginEmailTxt);
         if (email != null) {
-            //user = getUser(email, firstName, lastName);
-            this.saveUserDetailSP(user);
+            //userDto = getUser(email, firstName, lastName);
+            this.saveUserDetailSP(userDto);
         }
 
         loginNameView.setText(firstName + " " + lastName);
@@ -112,13 +112,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void saveUserDetailSP(User user) {
+    private void saveUserDetailSP(UserDto userDto) {
         SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE).edit();
-        editor.putString("name", user.getStudent().getFirstName() + " " + user.getStudent().getLastName());
-        editor.putString("email", user.getEmail());
-        editor.putString("password", user.getPassword());
+        editor.putString("name", userDto.getStudent().getFirstName() + " " + userDto.getStudent().getLastName());
+        editor.putString("email", userDto.getEmail());
+        editor.putString("password", userDto.getPassword());
         editor.putString("token", token != null ? token : "");
-        editor.putLong("user_id", user.getStudent().getId());
+        editor.putLong("user_id", userDto.getStudent().getId());
         editor.apply();
     }
 

@@ -2,14 +2,14 @@ package ca.appolizer.outreach.data.network.responses;
 
 import com.google.gson.annotations.SerializedName;
 
-import ca.appolizer.outreach.data.model.Skillset;
+import ca.appolizer.outreach.data.dto.SkillsetDto;
 
 public class StudentSkillsetResponse {
 
     private boolean status;
     private String message;
-    @SerializedName("skillset")
-    private Skillset skillset;
+    @SerializedName("skillsetDto")
+    private SkillsetDto skillsetDto;
 
     public boolean isStatus() {
         return status;
@@ -27,11 +27,11 @@ public class StudentSkillsetResponse {
         this.message = message;
     }
 
-    public Skillset getSkillset() {
-        return skillset;
+    public SkillsetDto getSkillset() {
+        return skillsetDto;
     }
 
-    public void setSkillset(Skillset skillset) {
-        this.skillset = skillset;
+    public void setSkillset(SkillsetDto skillsetDto) {
+        this.skillsetDto = skillsetDto;
     }
 }

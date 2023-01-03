@@ -21,11 +21,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.Objects;
-
 import ca.appolizer.outreach.MainActivity;
 import ca.appolizer.outreach.R;
-import ca.appolizer.outreach.data.model.Student;
+import ca.appolizer.outreach.data.dto.StudentDto;
 
 public class ProfileFragment extends Fragment {
 
@@ -71,14 +69,14 @@ public class ProfileFragment extends Fragment {
         ArrayAdapter<String> studentAvailability = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.availability));
         profileViewModel.getUserProfile().observe(requireActivity(), userProfileResponse -> {
             if (userProfileResponse != null) {
-                Student student = userProfileResponse.getStudent();
-                firstNameTxt.setText(student.getFirstName());
-                lastNameTxt.setText(student.getLastName());
-                emailTxt.setText(student.getEmail());
-                phoneTxt.setText(student.getContactNumber());
-                aboutTxt.setText(student.getAbout());
+                StudentDto studentDto = userProfileResponse.getStudent();
+                firstNameTxt.setText(studentDto.getFirstName());
+                lastNameTxt.setText(studentDto.getLastName());
+                emailTxt.setText(studentDto.getEmail());
+                phoneTxt.setText(studentDto.getContactNumber());
+                aboutTxt.setText(studentDto.getAbout());
 
-                availabilitySpinner.setSelection(student.getAvailability());
+                availabilitySpinner.setSelection(studentDto.getAvailability());
             }
         });
 
