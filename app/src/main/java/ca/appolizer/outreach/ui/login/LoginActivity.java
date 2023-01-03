@@ -6,9 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,14 +57,15 @@ public class LoginActivity extends AppCompatActivity {
     public void loginUser(StudentUserRequest studentRequest) {
 
         final CustomProgressDialog customProgressDialog = new CustomProgressDialog(this);
-        customProgressDialog.show(this, "Login", "Login", true, true);
+        CustomProgressDialog.show(this, "Login", "Login", true, true);
 
         Call<UserResponse> userResponseCall = ApiClient.getUserService().login(studentRequest);
         userResponseCall.enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+            public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
                 if (response.isSuccessful()) {
 
+                    assert response.body() != null;
                     if (response.body().getStatus().equals("true")) {
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -92,7 +92,10 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     JSONObject jsonObject;
                     try {
-                        jsonObject = new JSONObject(response.errorBody().string());
+                        assert response.errorBody() != null;
+                        String errorResponse = response.errorBody().string();
+
+                        jsonObject = new JSONObject(errorResponse);
                         Toast.makeText(getApplicationContext(), jsonObject.get("message").toString(), Toast.LENGTH_LONG).show();
                         customProgressDialog.cancel();
                         customProgressDialog.dismiss();

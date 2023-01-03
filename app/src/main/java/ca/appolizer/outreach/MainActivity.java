@@ -18,9 +18,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.Serializable;
+
 import ca.appolizer.outreach.data.dto.StudentDto;
 import ca.appolizer.outreach.data.dto.UserDto;
 
+import ca.appolizer.outreach.data.sp.UserSharePreference;
 import ca.appolizer.outreach.databinding.ActivityMainBinding;
 import ca.appolizer.outreach.ui.job.JobFragment;
 import ca.appolizer.outreach.ui.profile.ProfileActivity;
@@ -33,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView loginNameView;
 
     private static String token;
-    private static long id;
 
     private UserDto userDto;
 
@@ -47,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.appBarMain.toolbar);
 
         Intent intent = getIntent();
-        id = intent.getLongExtra("id", 0);
-        StudentDto studentDto = (StudentDto) intent.getSerializableExtra("studentDto");
+
         token = intent.getStringExtra("token");
         String email = intent.getStringExtra("email");
         String firstName = intent.getStringExtra("first_name");
@@ -56,12 +57,12 @@ public class MainActivity extends AppCompatActivity {
         String password = intent.getStringExtra("password");
         userDto = (UserDto) intent.getSerializableExtra("userDto");
 
-        JobFragment jobFragment = new JobFragment();
+        /*JobFragment jobFragment = new JobFragment();
         Bundle bundle = new Bundle();
         bundle.putLong("user_id", id);
         bundle.putString("token", token);
         bundle.putString("email", email);
-        jobFragment.setArguments(bundle);
+        jobFragment.setArguments(bundle);*/
 
         if (savedInstanceState != null) {
             savedInstanceState.putString("email", email);
@@ -113,13 +114,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveUserDetailSP(UserDto userDto) {
-        SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE).edit();
-        editor.putString("name", userDto.getStudent().getFirstName() + " " + userDto.getStudent().getLastName());
-        editor.putString("email", userDto.getEmail());
-        editor.putString("password", userDto.getPassword());
-        editor.putString("token", token != null ? token : "");
-        editor.putLong("user_id", userDto.getStudent().getId());
-        editor.apply();
+        UserSharePreference<Object> sharePreference = UserSharePreference.getInstance();
+        sharePreference.persistSharePreference(getApplicationContext(), "name", userDto.getStudent().getFirstName() + " " + userDto.getStudent().getLastName());
+        sharePreference.persistSharePreference(getApplicationContext(), "email", userDto.getEmail());
+        sharePreference.persistSharePreference(getApplicationContext(), "token", token != null ? token : "");
+        sharePreference.persistSharePreference(getApplicationContext(), "user_id", userDto.getStudent().getId());
+
+        //SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE).edit();
+        //editor.putString("name", userDto.getStudent().getFirstName() + " " + userDto.getStudent().getLastName());
+        //editor.putString("email", userDto.getEmail());
+        //editor.putString("password", userDto.getPassword());
+        //editor.putString("token", token != null ? token : "");
+        //editor.putLong("user_id", userDto.getStudent().getId());
+        //editor.apply();
     }
 
     @Override

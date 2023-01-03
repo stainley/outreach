@@ -17,9 +17,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import ca.appolizer.outreach.R;
 import ca.appolizer.outreach.data.dto.JobDto;
+import ca.appolizer.outreach.data.sp.UserSharePreference;
 import ca.appolizer.outreach.databinding.FragmentJobBinding;
 
 
@@ -38,10 +41,16 @@ public class JobFragment extends Fragment implements SearchView.OnQueryTextListe
 
         View root = binding.getRoot();
 
-        Intent intent = getActivity().getIntent();
-        String token = intent.getStringExtra("token");
-        String email = intent.getStringExtra("email");
-        long student_id = intent.getLongExtra("id", 0);
+        //Intent intent = getActivity().getIntent();
+        //String token = intent.getStringExtra("token");
+        //String email = intent.getStringExtra("email");
+        //long student_id = intent.getLongExtra("id", 0);
+
+        Map<String, Object> sharePreference = UserSharePreference.getInstance().getSharePreference(requireContext());
+        String token = String.valueOf(sharePreference.get("token"));
+        long student_id = sharePreference.get("user_id") != null ? (long) sharePreference.get("user_id") : 0L;
+
+        String email = String.valueOf(sharePreference.get("email"));
 
         jobListRecycler = binding.jobList;
         adapter = new JobAdapter(this, student_id, email);

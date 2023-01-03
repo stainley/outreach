@@ -2,37 +2,36 @@ package ca.appolizer.outreach.data.sp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.Map;
 
 public class UserSharePreference<T> {
     private static final String TAG = UserSharePreference.class.getName();
-    private SharedPreferences prefs;
+    private static SharedPreferences prefs;
     private static UserSharePreference uniqueInstance;
     public static final String PREF_NAME = "profile_info";
 
-    private UserSharePreference(Context appContext) {
-        prefs = appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    private UserSharePreference() {
     }
 
-    /**
-     * Throws IllegalStateException if this class is not initialized
-     *
-     * @return unique SharedPrefsManager instance
-     */
     public static UserSharePreference getInstance() {
         if (uniqueInstance == null) {
-            throw new IllegalStateException(
-                    "SharedPrefsManager is not initialized, call initialize(applicationContext) " +
-                            "static method first");
+            uniqueInstance = new UserSharePreference();
         }
         return uniqueInstance;
     }
 
-    public void persistSharePreference(Context context, T type) {
+    public void persistSharePreference(Context context, String key, T value) {
         SharedPreferences.Editor sp = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit();
 
-        sp.putString("token", "");
+        if (value instanceof String) {
+            sp.putString(key, (String) value);
+        }
+        if (value instanceof Long) {
+            sp.putLong(key, (Long) value);
+        }
+
         sp.apply();
     }
 
@@ -48,45 +47,9 @@ public class UserSharePreference<T> {
     /**
      * Clears all data in SharedPreferences
      */
-    public void clearPrefs() {
-        SharedPreferences.Editor editor = getPrefs().edit();
-        editor.clear();
-        editor.commit();
-    }
-
-    public void removeKey(String key) {
-        getPrefs().edit().remove(key).commit();
-    }
-
-    public boolean containsKey(String key) {
-        return getPrefs().contains(key);
-    }
-
-    public String getString(String key, String defValue) {
-        return getPrefs().getString(key, defValue);
-    }
-
-    public String getString(String key) {
-        return getString(key, null);
-    }
-
-    public void setString(String key, String value) {
-        SharedPreferences.Editor editor = getPrefs().edit();
-        editor.putString(key, value);
-        editor.apply();
-    }
-
-    public int getInt(String key, int defValue) {
-        return getPrefs().getInt(key, defValue);
-    }
-
-    public int getInt(String key) {
-        return getInt(key, 0);
-    }
-
-    public void setInt(String key, int value) {
-        SharedPreferences.Editor editor = getPrefs().edit();
-        editor.putInt(key, value);
-        editor.apply();
+    public void clearPrefs(Context context) {
+        SharedPreferences.Editor sp = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit();
+        sp.clear();
+        sp.apply();
     }
 }
