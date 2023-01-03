@@ -1,9 +1,12 @@
 package ca.appolizer.outreach.data.dto;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class JobDto {
     private long id;
-    private int user_id;
+    @SerializedName("user_id")
+    private int userId;
     private String name;
     private String description;
 
@@ -37,5 +40,13 @@ public class JobDto {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

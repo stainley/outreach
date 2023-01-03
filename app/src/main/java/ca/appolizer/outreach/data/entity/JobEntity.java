@@ -1,13 +1,15 @@
 package ca.appolizer.outreach.data.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "jobs", indices = {@Index("name")})
 public class JobEntity {
     @PrimaryKey
     private long id;
-
+    @ColumnInfo(name = "user_id")
     private int userId;
     private String name, description;
 
